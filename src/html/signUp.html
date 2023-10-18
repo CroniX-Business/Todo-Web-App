@@ -7,6 +7,7 @@
     
         <link rel="icon" type="image/x-icon" href="../../assets/img/Todoify.png">
         <link href="../../assets/img/Todoify.png" rel="apple-touch-icon">
+        <script src="../js/signUp.js" defer></script>
 
         <title>Todoify</title>
     </head>
@@ -32,25 +33,38 @@
         <div class="flex items-center justify-center min-h-screen">
             <form class="w-full max-w-md">
                 <div class="mb-6">
-                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                <input type="email" id="email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="name@flowbite.com" required>
+                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+                    <input type="email" id="email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="name@flowbite.com" required>
                 </div>
                 <div class="mb-6">
-                <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
-                <input type="password" id="password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
+                    <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
+                    <div class="relative w-full">
+                        <div class="absolute inset-y-0 right-0 flex items-center px-2">
+                            <input class="hidden js-password-toggle" id="toggle" type="checkbox" onclick="showPassword()" />
+                            <label id="toggleLabel" class="bg-gray-300 hover:bg-gray-400 rounded px-2 py-1 text-sm text-gray-600 font-mono cursor-pointer" for="toggle">show</label>
+                        </div>
+                        <input type="password" id="password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="password" required>
+                    </div>
                 </div>
                 <div class="mb-6">
-                <label for="repeat-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Repeat password</label>
-                <input type="password" id="repeat-password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
+                    <label for="repeat-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Repeat password</label>
+                    <input type="password" id="repeat-password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="password" required>
                 </div>
                 <div class="flex items-start mb-6">
                 <div class="flex items-center h-5">
                     <input id="terms" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required>
                 </div>
-                <label for="terms" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree with the <a href="#" class="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a></label>
+                    <label for="terms" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree with the <a href="javascript:void(0);" onclick="openPopup()" class="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a></label>
                 </div>
+                <div id="popup" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-slate-800 p-4 rounded z-10 hidden">
+                    <div class="max-h-96 overflow-y-auto bg-gray-700 text-white shadow-md p-6 rounded">
+                        <p class="m-0">This is the text in the popup window. It can be quite long, but the paragraph will have a fixed height, and a scrollbar will appear if the content overflows.This is the text in the popup window. It can be quite long, but the paragraph will have a fixed height, and a scrollbar will appear if the content overflows.This is the text in the popup window. It can be quite long, but the paragraph will have a fixed height, and a scrollbar will appear if the content overflows.This is the text in the popup window. It can be quite long, but the paragraph will have a fixed height, and a scrollbar will appear if the content overflows.This is the text in the popup window. It can be quite long, but the paragraph will have a fixed height, and a scrollbar will appear if the content overflows.<!-- Repeat this text as needed --></p>
+                        <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" onclick="closePopup();">Close Popup</button>
+                    </div>
+                </div>
+                <div id="overlay" class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-70 z-0 hidden" onclick="closePopup();"></div> 
                 <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Register new account</button>
-            </form>
+            </form>                      
         </div>
     </body>
 </html>
