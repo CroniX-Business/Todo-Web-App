@@ -2,22 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  background: #013A6B;
+*{
+  margin: 0;
+  padding: 0;
 }
 
-#hero {
+body {
+    background-color: #000000;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.signUp, .signIn{
+    background-image: -webkit-linear-gradient(30deg, #013A6B 50%, #004E95 50%);
+    background-repeat: no-repeat;
+}
+
+.index #hero {
     width: 100%;
     height: 80vh;
     background: #37517e;
     background-image: -webkit-linear-gradient(30deg, #013A6B 50%, #004E95 50%);
 }
   
-#hero .container {
+.index #hero .container {
   padding-top: 70px;
 }
   
-#hero h1 {
+.index  #hero h1 {
     margin: 0 0 10px 0;
     font-size: 48px;
     font-weight: 700;
@@ -25,60 +37,60 @@ body {
     color: #fff;
 }
   
-#hero h2 {
+.index #hero h2 {
     color: rgba(255, 255, 255, 0.6);
     margin-bottom: 50px;
     font-size: 24px;
 }
 
-#hero img {
+.index #hero img {
     width: 100%; /* Set the width to 100% of its container */
     max-width: 400px; /* Set a maximum width if needed */
     height: auto; /* Maintain the aspect ratio */
 }
   
-#hero .animated {
+.index #hero .animated {
     animation: up-down 2s ease-in-out infinite alternate-reverse both;
 }
   
 @media (max-width: 991px) {
-    #hero {
+    .index #hero {
       height: 100vh;
       text-align: center;
     }
   
-    #hero .animated {
+    .index  #hero .animated {
       animation: none;
     }
   
-    #hero .hero-img {
+    .index #hero .hero-img {
       text-align: center;
     }
   
-    #hero .hero-img img {
+    .index #hero .hero-img img {
       width: 50%;
     }
 }
   
 @media (max-width: 768px) {
-    #hero h1 {
+    .index #hero h1 {
       font-size: 28px;
       line-height: 36px;
     }
   
-    #hero h2 {
+    .index #hero h2 {
       font-size: 18px;
       line-height: 24px;
       margin-bottom: 30px;
     }
   
-    #hero .hero-img img {
+    .index #hero .hero-img img {
       width: 70%;
     }
 }
   
 @media (max-width: 575px) {
-    #hero .hero-img img {
+    .index #hero .hero-img img {
       width: 80%;
     }
 }
@@ -92,7 +104,3 @@ body {
       transform: translateY(-10px);
     }
 }
-
-footer {
-    background-color: #013A6B;
-}  

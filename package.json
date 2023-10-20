@@ -1,7 +1,4 @@
 {
-  "devDependencies": {
-    "tailwindcss": "^3.3.3"
-  },
   "name": "todo",
   "version": "1.0.0",
   "description": "Multifunction task manager",
@@ -78,9 +75,12 @@
     "wrappy": "^1.0.2",
     "yaml": "^2.3.3"
   },
-  "scripts": {
-    "build": "npx tailwindcss -i ./src/css/index.css -o ./dist/output.css --watch && npx tailwindcss -i ./src/css/signUp.css -o ./dist/signUp.css --watch"
+  "devDependencies": {
+    "tailwindcss": "^3.3.3"
   },
-  "author": "",
+  "scripts": {
+    "build:css": "npx tailwindcss -i ./src/css/style.css -o ./dist/tailwind.css --watch"
+  },
+  "author": "Petar Ruškan",
   "license": "ISC"
 }

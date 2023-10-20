@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="/dist/signUp.css" rel="stylesheet">
+        <link href="/dist/tailwind.css" rel="stylesheet">
     
         <link rel="icon" type="image/x-icon" href="../../assets/img/Todoify.png">
         <link href="../../assets/img/Todoify.png" rel="apple-touch-icon">
@@ -11,7 +11,7 @@
 
         <title>Todoify</title>
     </head>
-    <body>
+    <body class="signUp">
         <nav class="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600">
             <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                 <a href="index.html" class="flex items-center">
@@ -19,7 +19,7 @@
                     <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Todoify</span>
                 </a>
                 <div class="flex md:order-2">
-                    <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><a href="signIn.html">Sign In</a></button>
+                    <a href="index.html" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Sign In</a>
                 </div>
             </div>
         </nav>
@@ -49,16 +49,42 @@
                     <input id="terms" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required>
                 </div>
                     <label for="terms" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree with the <a href="javascript:void(0);" onclick="openPopup()" class="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a></label>
-                </div>
-                <div id="popup" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-slate-800 p-4 rounded z-10 hidden">
-                    <div class="max-h-96 overflow-y-auto bg-gray-700 text-white shadow-md p-6 rounded">
-                        <p class="m-0">This is the text in the popup window. It can be quite long, but the paragraph will have a fixed height, and a scrollbar will appear if the content overflows.This is the text in the popup window. It can be quite long, but the paragraph will have a fixed height, and a scrollbar will appear if the content overflows.This is the text in the popup window. It can be quite long, but the paragraph will have a fixed height, and a scrollbar will appear if the content overflows.This is the text in the popup window. It can be quite long, but the paragraph will have a fixed height, and a scrollbar will appear if the content overflows.This is the text in the popup window. It can be quite long, but the paragraph will have a fixed height, and a scrollbar will appear if the content overflows.<!-- Repeat this text as needed --></p>
-                        <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" onclick="closePopup();">Close Popup</button>
-                    </div>
-                </div>
-                <div id="overlay" class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-70 z-0 hidden" onclick="closePopup();"></div> 
+                </div> 
                 <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Register new account</button>
-            </form>                      
+            </form>
+            <div id="popup" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-slate-800 p-4 rounded z-10 hidden">
+                <div class="max-h-96 overflow-y-auto bg-gray-700 text-white shadow-md p-6 rounded">
+                    <p class="m-0">This is the text in the popup window. It can be quite long, but the paragraph will have a fixed height, and a scrollbar will appear if the content overflows.This is the text in the popup window. It can be quite long, but the paragraph will have a fixed height, and a scrollbar will appear if the content overflows.This is the text in the popup window. It can be quite long, but the paragraph will have a fixed height, and a scrollbar will appear if the content overflows.This is the text in the popup window. It can be quite long, but the paragraph will have a fixed height, and a scrollbar will appear if the content overflows.This is the text in the popup window. It can be quite long, but the paragraph will have a fixed height, and a scrollbar will appear if the content overflows.<!-- Repeat this text as needed --></p>
+                    <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" onclick="closePopup();">Close Popup</button>
+                </div>
+            </div>
+            <div id="overlay" class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-70 z-0 hidden" onclick="closePopup();"></div>                     
         </div>
+
+        <footer id="Service" class="bg-white dark:bg-gray-900 flex flex-col items-center text-center lg:text-left text-neutral-700 dark:text-neutral-200">
+            <div class="container pt-5 text-neutral-700 dark:text-neutral-200">
+                <div id="icons" class="flex justify-between gap-2">
+                    <!-- Logo 1 -->
+                    <img src="../../assets/img/Todoify.png" alt="Donor Logo 1" class="h-10 w-10 object-contain">
+                    
+                    <!-- Logo 2 -->
+                    <img src="../../assets/img/Todoify.png" alt="Donor Logo 2" class="h-10 w-10 object-contain">
+                    
+                    <!-- Logo 3 -->
+                    <img src="../../assets/img/Todoify.png" alt="Donor Logo 3" class="h-10 w-10 object-contain">
+                    
+                    <!-- Logo 4 -->
+                    <img src="../../assets/img/Todoify.png" alt="Donor Logo 4" class="h-10 w-10 object-contain">
+                    
+                    <!-- Logo 5 -->
+                    <img src="../../assets/img/Todoify.png" alt="Donor Logo 5" class="h-10 w-10 object-contain">
+                </div>
+            </div>
+        
+            <div class="w-full p-4 text-center text-neutral-700 dark:text-neutral-200">
+                &copy; <span id="year"></span> Copyright Todoify
+            </div>
+        </footer>
+
     </body>
 </html>

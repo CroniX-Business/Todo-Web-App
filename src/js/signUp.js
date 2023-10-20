@@ -1,3 +1,7 @@
+const currentYear = new Date().getFullYear();
+
+document.getElementById('year').textContent = currentYear;
+
 function showPassword() {
   var checkbox = document.getElementById('toggle');
   var label = document.getElementById('toggleLabel');
