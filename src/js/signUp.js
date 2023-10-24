@@ -2,12 +2,11 @@ const currentYear = new Date().getFullYear();
 
 document.getElementById('year').textContent = currentYear;
 
-function showPassword() {
+const showPassword = () => {
   var checkbox = document.getElementById('toggle');
   var label = document.getElementById('toggleLabel');
   var passwordInput = document.getElementById('password');
   var repeatPasswordInput = document.getElementById('repeat-password');
-
 
   if (checkbox.checked) {
     label.innerText = 'hide';
@@ -18,16 +17,14 @@ function showPassword() {
     passwordInput.type = 'password';
     repeatPasswordInput.type = 'password';
   }
-}
+};
 
-function openPopup() {
-  var popup = document.getElementById('popup');
-
+const openTerms = () => {
+  const popup = document.getElementById('popupTerms');
   popup.style.display = 'block';
-}
+};
 
-function closePopup() {
-  var popup = document.getElementById('popup');
-
+const closeTerms = () => {
+  const popup = document.getElementById('popupTerms');
   popup.style.display = 'none';
-}
+};

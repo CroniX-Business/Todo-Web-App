@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-function showPassword() {
+const showPassword = () => {
     var checkbox = document.getElementById('toggle');
     var label = document.getElementById('toggleLabel');
     var passwordInput = document.getElementById('password');
@@ -27,16 +27,15 @@ function showPassword() {
       passwordInput.type = 'password';
       repeatPasswordInput.type = 'password';
     }
-}
+};
 
-function openTerms() {
-    var popup = document.getElementById('popupTerms');
+const openTerms = () => {
+  const popup = document.getElementById('popupTerms');
+  popup.style.display = 'block';
+};
+
   
-    popup.style.display = 'block';
-  }
-  
-  function closeTerms() {
-    var popup = document.getElementById('popupTerms');
-  
-    popup.style.display = 'none';
-}
+const closeTerms = () => {
+  const popup = document.getElementById('popupTerms');
+  popup.style.display = 'none';
+};
