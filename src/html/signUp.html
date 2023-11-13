@@ -12,14 +12,14 @@
         <title>Todoify</title>
     </head>
     <body class="signUp">
-        <nav class="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600">
+        <nav class="dark:bg-gray-900 fixed w-full z-20 border-b dark:border-gray-600">
             <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                 <a href="home.html" class="flex items-center">
                     <img src="../../assets/img/Todoify.png" class="h-8 mr-3" alt="Todoify Logo">
                     <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Todoify</span>
                 </a>
                 <div class="flex md:order-2">
-                    <a href="home.html" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Sign In</a>
+                    <a href="home.html" class="  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ">Login</a>
                 </div>
             </div>
         </nav>
@@ -28,14 +28,14 @@
             <form class="lg:w-full max-w-md">
                 <div class="mb-6">
                     <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                    <input type="email" id="email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="name@flowbite.com" required>
+                    <input type="email" id="email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="name@gmail.com" required>
                 </div>
                 <div class="mb-6">
                     <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
                     <div class="relative w-full">
                         <div class="absolute inset-y-0 right-0 flex items-center px-2">
                             <input class="hidden js-password-toggle" id="toggle" type="checkbox" onclick="showPassword()" />
-                            <label id="toggleLabel" class="bg-gray-300 hover:bg-gray-400 rounded px-2 py-1 text-sm text-gray-600 font-mono cursor-pointer" for="toggle">show</label>
+                            <label id="toggleLabel" class="bg-gray-300 hover:bg-gray-400 rounded px-2 py-1 text-sm text-gray-600 font-mono cursor-pointer" for="toggle" title="Show password and repeated password">show</label>
                         </div>
                         <input type="password" id="password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="password" required>
                     </div>
@@ -44,20 +44,8 @@
                     <label for="repeat-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Repeat password</label>
                     <input type="password" id="repeat-password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="password" required>
                 </div>
-                <div class="flex items-start mb-6">
-                <div class="flex items-center h-5">
-                    <input id="terms" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required>
-                </div>
-                    <label for="terms" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree with the <a href="javascript:void(0);" onclick="openPopup()" class="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a></label>
-                </div> 
                 <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Register new account</button>
-            </form>
-            <div id="popup" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-slate-800 p-4 rounded z-10 hidden">
-                <div class="max-h-96 overflow-y-auto bg-gray-700 text-white shadow-md p-6 rounded">
-                    <p class="m-0">This is the text in the popup window. It can be quite long, but the paragraph will have a fixed height, and a scrollbar will appear if the content overflows.This is the text in the popup window. It can be quite long, but the paragraph will have a fixed height, and a scrollbar will appear if the content overflows.This is the text in the popup window. It can be quite long, but the paragraph will have a fixed height, and a scrollbar will appear if the content overflows.This is the text in the popup window. It can be quite long, but the paragraph will have a fixed height, and a scrollbar will appear if the content overflows.This is the text in the popup window. It can be quite long, but the paragraph will have a fixed height, and a scrollbar will appear if the content overflows.<!-- Repeat this text as needed --></p>
-                    <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" onclick="closePopup();">Close Popup</button>
-                </div>
-            </div>                    
+            </form>                   
         </div>
 
         <footer id="Service" class="bg-white dark:bg-gray-900 flex flex-col items-center text-center lg:text-left text-neutral-700 dark:text-neutral-200">

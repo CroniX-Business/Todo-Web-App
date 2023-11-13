@@ -28,14 +28,3 @@ const showPassword = () => {
       repeatPasswordInput.type = 'password';
     }
 };
-
-const openTerms = () => {
-  const popup = document.getElementById('popupTerms');
-  popup.style.display = 'block';
-};
-
-  
-const closeTerms = () => {
-  const popup = document.getElementById('popupTerms');
-  popup.style.display = 'none';
-};
