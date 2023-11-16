@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="/dist/tailwind.css" rel="stylesheet">
+
+        <link rel="icon" type="image/x-icon" href="/assets/img/Todoify.png">
+        <link href="/assets/img/Todoify.png" rel="apple-touch-icon">
+        <script src="https://kit.fontawesome.com/9370c67199.js" crossorigin="anonymous"></script>
+
+        <script src="/src/js/home.js" defer></script>
+        
+
+        <title>Todoify</title>
+    </head>
+    <body class="index">
+        
+        <nav class="dark:bg-gray-900 fixed w-full z-20 border-b dark:border-gray-600">
+            <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+                <a href="home.html" class="flex items-center">
+                    <img src="/assets/img/Todoify.png" class="h-8 mr-3" alt="Todoify Logo">
+                    <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Todoify</span>
+                </a>
+                <div class="flex md:order-2">
+                    <a href="/src/html/signUp.html" class="  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ">Get Started</a>
+                    <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-sticky" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
+                    <ul class="flex flex-col p-4 md:p-0 mt-2 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                        <li>
+                            <a href="#" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500" aria-current="page">Home</a>
+                        </li>
+                        <li>
+                            <a href="#About" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">About</a>
+                        </li>
+                        <li>
+                            <a href="#Service" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Services</a>
+                        </li>
+                    </ul>                   
+                </div>
+            </div>
+        </nav>
+
+        <div id="hero" class="flex items-center w-full">
+            <div class="container mx-auto pt-20">
+                <div class="flex flex-col lg:flex-row items-center lg:items-start justify-between">
+                    
+                    <div class="lg:w-1/2 lg:order-1 lg:pl-4 flex flex-col items-center lg:items-start mb-10" data-aos="fade-up" data-aos-delay="200">
+                        <h1 class="m-0 mb-10 text-3xl font-extrabold leading-10 text-white sm:">Welcome to Todoify</h1>
+                        <h2 class="text-2xl text-white/60 mb-12">Awesome Todoify</h2>
+                        <a href="/src/html/signUp.html" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-lg px-16 py-4 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 block">
+                            Get Started
+                        </a>
+                    </div>
+
+                    <div class="lg:w-1/3 lg:h-96 lg:order-2 lg:flex relative justify-center">
+                        <div class="backdrop-blur-sm bg-white/30 text-white shadow-2xl p-6 rounded-3xl border-white border-solid border-2 w-full max-w-xs h-min">
+                            <div class="flex items-center justify-center">
+                                <form class="w-full max-w-md">
+
+                                    <div class="mb-6">
+                                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+                                        <input type="email" id="email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="name@flowbite.com" required>
+                                    </div>
+
+                                    <div class="mb-6">
+                                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
+                                        <div class="relative w-full">
+                                            <div class="absolute inset-y-0 right-0 flex items-center px-2">
+                                                <input class="hidden js-password-toggle" id="toggle" type="checkbox" onclick="showPassword()" />
+                                                <label id="toggleLabel" class="bg-gray-300 hover:bg-gray-400 rounded px-2 py-1 text-sm text-gray-600 font-mono cursor-pointer" for="toggle">show</label>
+                                            </div>
+                                            <input type="password" id="password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="password" required>
+                                        </div>                      
+                                    </div>
+                                    
+                                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 m-5">Login</button>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section id="About" class="flex items-center bg-stone-100 xl:h-auto font-poppins dark:bg-gray-800 ">
+            <div class="justify-center flex-1 max-w-6xl py-4 mx-auto lg:py-6 md:px-6">
+                <div class="flex flex-wrap ">
+                    <div class="w-full px-4 mb-10 lg:w-1/2 lg:mb-0">
+                        <div class="relative lg:max-w-md">
+                            <img src="https://i.postimg.cc/rF0MKfBV/pexels-andrea-piacquadio-3760263.jpg" alt="aboutimage" class="relative z-10 object-cover w-full rounded h-96">
+                            <div  class="absolute bottom-0 right-0 z-10 p-8 bg-white border-4 border-blue-500 rounded shadow dark:border-blue-400 lg:-mb-8 lg:-mr-11 sm:p-8 dark:text-gray-300 dark:bg-gray-800 ">
+                                <p class="text-lg font-semibold md:w-72">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                        class="absolute top-0 left-0 w-16 h-16 text-blue-700 dark:text-gray-300 opacity-10"
+                                        viewBox="0 0 16 16">
+                                        <path
+                                            d="M12 12a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1h-1.388c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 9 7.558V11a1 1 0 0 0 1 1h2Zm-6 0a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1H4.612c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 3 7.558V11a1 1 0 0 0 1 1h2Z">
+                                        </path>
+                                    </svg> Successfully Elevating organization and productivity
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full px-6 mb-10 lg:w-1/2 lg:mb-0 ">
+                        <div class="pl-4 mb-6 border-l-4 border-blue-500 ">
+                            <span class="text-sm text-gray-600 uppercase dark:text-gray-400">What is this app?</span>
+                            <h1 class="mt-2 text-3xl font-black text-gray-700 md:text-5xl dark:text-gray-300">
+                                About Us
+                            </h1>
+                        </div>
+                        <p class="mb-6 text-base leading-7 text-gray-500 dark:text-gray-400">
+                            Todoify is your all-in-one companion for productivity and relaxation. This sleek app seamlessly blends the practicality of a task manager with the versatility of a weather tracker and the soothing ambiance of personalized music. Stay organized by effortlessly managing your to-do list, ensuring that nothing slips through the cracks. Need to know the weather for your day ahead? Todoify has you covered with real-time updates. Elevate your work environment by immersing yourself in ambient music that adapts to your preferences, creating the perfect backdrop for focused productivity. With Todoify, productivity meets tranquility in one harmonious experience.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <footer id="Service" class="flex flex-col items-center text-center lg:text-left text-neutral-700 dark:text-neutral-200">
+            <div class="container pt-5 text-neutral-700 dark:text-neutral-200">
+                <div id="icons" class="flex justify-between gap-2">
+                    <!-- Logo 1 -->
+                    <img src="/assets/img/Todoify.png" alt="Donor Logo 1" class="h-10 w-10 object-contain">
+                    
+                    <!-- Logo 2 -->
+                    <img src="/assets/img/Todoify.png" alt="Donor Logo 2" class="h-10 w-10 object-contain">
+                    
+                    <!-- Logo 3 -->
+                    <img src="/assets/img/Todoify.png" alt="Donor Logo 3" class="h-10 w-10 object-contain">
+                    
+                    <!-- Logo 4 -->
+                    <img src="/assets/img/Todoify.png" alt="Donor Logo 4" class="h-10 w-10 object-contain">
+                    
+                    <!-- Logo 5 -->
+                    <img src="/assets/img/Todoify.png" alt="Donor Logo 5" class="h-10 w-10 object-contain">
+                </div>
+            </div>
+        
+            <div class="w-full p-4 text-center text-neutral-700 dark:text-neutral-200">
+                &copy; <span id="year"></span> Copyright Todoify
+            </div>
+        </footer>
+        
+    </body>
+</html>
