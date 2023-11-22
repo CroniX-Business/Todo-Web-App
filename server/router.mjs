@@ -15,6 +15,14 @@ app.get('/', (req, res) => {
   res.sendFile(join(rootDir, '/home.html'));
 });
 
+app.get('/signUp', (req, res) => {
+  res.sendFile(join(rootDir, 'src/html/signUp.html'));
+});
+
+app.get('/todo', (req, res) => {
+  res.sendFile(join(rootDir, 'src/html/todo.html'));
+});
+
 const port = 3000;
 app.listen(port, () =>
   console.log(`Server listening at http://localhost:${port}`),

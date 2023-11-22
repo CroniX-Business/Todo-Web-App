@@ -1,1 +1,1 @@
-import './rootRedirector.mjs';
+import './router.mjs';
