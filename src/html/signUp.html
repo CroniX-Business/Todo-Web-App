@@ -1,122 +1,74 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="/dist/tailwind.css" rel="stylesheet" />
 
-    <link rel="icon" type="image/x-icon" href="../../assets/img/Todoify.png" />
-    <link href="../../assets/img/Todoify.png" rel="apple-touch-icon" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="/dist/tailwind.css" rel="stylesheet" />
 
-    <script src="../src/js/signUp.js" type="text/javascript" defer></script>
+  <link rel="icon" type="image/x-icon" href="../../assets/img/Todoify.png" />
+  <link href="../../assets/img/Todoify.png" rel="apple-touch-icon" />
 
-    <title>Todoify</title>
-  </head>
-  <body class="signUp">
-    <nav
-      class="fixed w-full z-20 border-b bg-sky-900 border-gray-600 dark:bg-gray-900 dark:border-gray-600"
-    >
-      <div
-        class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
-      >
-        <a href="/" class="flex items-center">
-          <img
-            src="/assets/img/Todoify.png"
-            class="h-8 mr-3"
-            alt="Todoify Logo"
-          />
-          <span
-            class="self-center text-2xl font-semibold whitespace-nowrap text-sky-100 dark:text-white"
-            >Todoify</span
-          >
-        </a>
-        <div class="flex md:order-2">
-          <a
-            href="/"
-            class="text-black bg-sky-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 text-center mr-3 md:mr-0 dark:text-white dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >Login</a
-          >
-        </div>
+  <script src="../src/js/signUp.js" type="text/javascript" defer></script>
+
+  <title>Todoify</title>
+</head>
+
+<body class="signUp">
+  <nav class="fixed w-full z-20 border-b bg-sky-900 border-gray-600 dark:bg-gray-900 dark:border-gray-600">
+    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <a href="/" class="flex items-center">
+        <img src="/assets/img/Todoify.png" class="h-8 mr-3" alt="Todoify Logo" />
+        <span class="self-center text-2xl font-semibold whitespace-nowrap text-sky-100 dark:text-white">Todoify</span>
+      </a>
+      <div class="flex md:order-2">
+        <a href="/"
+          class="text-black bg-sky-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 text-center mr-3 md:mr-0 dark:text-white dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login</a>
       </div>
-    </nav>
-
-    <div id="register" class="flex items-center justify-center h-screen">
-      <form class="lg:w-full max-w-md">
-        <div class="mb-6">
-          <label
-            for="email"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >Your email</label
-          >
-          <input
-            type="email"
-            id="email"
-            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-            placeholder="name@gmail.com"
-            required
-          />
-        </div>
-        <div class="mb-6">
-          <label
-            for="password"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >Your password</label
-          >
-          <div class="relative w-full">
-            <div class="absolute inset-y-0 right-0 flex items-center px-2">
-              <input
-                class="hidden js-password-toggle"
-                id="toggle"
-                type="checkbox"
-                onclick="showPassword()"
-              />
-              <label
-                id="toggleLabel"
-                class="bg-gray-300 hover:bg-gray-400 rounded px-2 py-1 text-sm text-gray-600 font-mono cursor-pointer"
-                for="toggle"
-                title="Show password and repeated password"
-                >show</label
-              >
-            </div>
-            <input
-              type="password"
-              id="password"
-              class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-              placeholder="password"
-              required
-            />
-          </div>
-        </div>
-        <div class="mb-6">
-          <label
-            for="repeat-password"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >Repeat password</label
-          >
-          <input
-            type="password"
-            id="repeat-password"
-            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-            placeholder="password"
-            required
-          />
-        </div>
-        <button
-          type="submit"
-          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        >
-          Register new account
-        </button>
-      </form>
     </div>
+  </nav>
 
-    <footer
-      id="Service"
-      class="flex flex-col items-center text-center lg:text-left bg-sky-900 dark:bg-sky-950"
-    >
-      <div class="w-full p-4 text-center text-sky-100 dark:text-neutral-200">
-        &copy; <span id="year"></span> Copyright Todoify
+  <div id="register" class="flex items-center justify-center h-full">
+    <form class="w-full max-w-md h-96">
+      <div class="mb-6">
+        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+        <input type="email" id="email"
+          class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+          placeholder="name@gmail.com" required />
       </div>
-    </footer>
-  </body>
+      <div class="mb-6">
+        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
+        <div class="relative w-full">
+          <div class="absolute inset-y-0 right-0 flex items-center px-2">
+            <input class="hidden js-password-toggle" id="toggle" type="checkbox" onclick="showPassword()" />
+            <label id="toggleLabel"
+              class="bg-gray-300 hover:bg-gray-400 rounded px-2 py-1 text-sm text-gray-600 font-mono cursor-pointer"
+              for="toggle" title="Show password and repeated password">show</label>
+          </div>
+          <input type="password" id="password"
+            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+            placeholder="password" required />
+        </div>
+      </div>
+      <div class="mb-6">
+        <label for="repeat-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Repeat
+          password</label>
+        <input type="password" id="repeat-password"
+          class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+          placeholder="password" required />
+      </div>
+      <button type="submit"
+        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        Register new account
+      </button>
+    </form>
+  </div>
+
+  <footer id="Service" class="flex flex-col items-center text-center lg:text-left bg-sky-900 dark:bg-sky-950">
+    <div class="w-full p-4 text-center text-sky-100 dark:text-neutral-200">
+      &copy; <span id="year"></span> Copyright Todoify
+    </div>
+  </footer>
+</body>
+
 </html>

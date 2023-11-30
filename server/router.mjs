@@ -2,30 +2,51 @@ import express from 'express';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
+import connectEnsureLogin from 'connect-ensure-login';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const app = express();
-
 const rootDir = dirname(__dirname);
 
-app.use(express.static(rootDir));
+const router = express.Router();
 
-app.get('/', (req, res) => {
+router.use(express.static(rootDir));
+
+router.get('/', (req, res) => {
   res.sendFile(join(rootDir, '/home.html'));
 });
 
-app.get('/signUp', (req, res) => {
+router.get('/signUp', (req, res) => {
   res.sendFile(join(rootDir, 'src/html/signUp.html'));
 });
 
-app.get('/todo', (req, res) => {
+router.get('/logout', function(req, res) {
+  req.logout(function(err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect('/');
+  });
+});
+
+router.get('/todo', connectEnsureLogin.ensureLoggedIn('/'), (req, res) => {
   res.sendFile(join(rootDir, 'src/html/todo.html'));
 });
 
-const port = 3000;
-app.listen(port, () =>
-  console.log(`Server listening at http://localhost:${port}`),
-);
+router.get('/settings', connectEnsureLogin.ensureLoggedIn('/'), (req, res) => {
+  res.sendFile(join(rootDir, 'src/html/settings.html'));
+});
 
-export {};
+const ensureAdmin = (req, res, next) => {
+  if (req.isAuthenticated() && req.user.role === 'admin') {
+    return next();
+  }
+  res.redirect('/todo');
+};
+
+router.get('/admin', ensureAdmin, (req, res) => {
+  res.sendFile(join(rootDir, 'src/html/admin.html'));
+});
+
+export default router;
