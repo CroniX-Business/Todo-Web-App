@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   });
 
-  function handleLoginError(errorMessage) {
+  const handleLoginError = (errorMessage) => {
     let existingParagraph = document.getElementById("errorParagraph");
 
     if (!existingParagraph) {
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function handleLoginSuccess(redirectUrl) {
+  const handleLoginSuccess = (redirectUrl) => {
     if (redirectUrl) {
       window.location.href = redirectUrl;
     }

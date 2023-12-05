@@ -8,7 +8,11 @@
 
     <link rel="icon" type="image/x-icon" href="../../assets/img/Todoify.png">
     <link href="../../assets/img/Todoify.png" rel="apple-touch-icon">
-    <script src="../src/js/settings.js" defer></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+
+    <script src="../src/js/admin.js"></script>
 
     <title>Todoify</title>
 </head>
@@ -16,35 +20,35 @@
 <body class="admin">
     <!--NAV-->
     <nav class="fixed w-full z-20 border-b bg-sky-900 border-gray-600 dark:bg-gray-900 dark:border-gray-600">
-      <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-          <a href="/" class="flex items-center">
-              <img src="/assets/img/Todoify.png" class="h-8 mr-3" alt="Todoify Logo" />
-              <span
-                  class="self-center text-2xl font-semibold whitespace-nowrap text-sky-100 dark:text-white">Todoify</span>
-          </a>
-          <div class="flex md:order-2">
-              <button data-collapse-toggle="navbar-sticky" type="button"
-                  class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-sky-100 rounded-lg md:hidden hover:bg-sky-100 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                  aria-controls="navbar-sticky" aria-expanded="false">
-                  <span class="sr-only">Open main menu</span>
-                  <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                      viewBox="0 0 17 14">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M1 1h15M1 7h15M1 13h15" />
-                  </svg>
-              </button>
-          </div>
-          <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-2" id="navbar-sticky">
-              <ul
-                  class="flex flex-col p-4 md:p-0 mt-2 font-medium border rounded-lg bg-sky-900 md:flex-row md:space-x-8 md:mt-0 md:border-0 dark:bg-gray-900 dark:border-gray-700">
-                  <li>
-                      <a href="/logout"
-                          class="block text-center py-2 pl-3 pr-4 text-sky-400 rounded hover:text-sky-200 p-0 dark:hover:text-blue-500 dark:text-white">Logout</a>
-                  </li>
-              </ul>
-          </div>
-      </div>
-  </nav>
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+            <a href="/" class="flex items-center">
+                <img src="/assets/img/Todoify.png" class="h-8 mr-3" alt="Todoify Logo" />
+                <span
+                    class="self-center text-2xl font-semibold whitespace-nowrap text-sky-100 dark:text-white">Todoify</span>
+            </a>
+            <div class="flex md:order-2">
+                <button data-collapse-toggle="navbar-sticky" type="button"
+                    class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-sky-100 rounded-lg md:hidden hover:bg-sky-100 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                    aria-controls="navbar-sticky" aria-expanded="false">
+                    <span class="sr-only">Open main menu</span>
+                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 17 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M1 1h15M1 7h15M1 13h15" />
+                    </svg>
+                </button>
+            </div>
+            <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-2" id="navbar-sticky">
+                <ul
+                    class="flex flex-col p-4 md:p-0 mt-2 font-medium border rounded-lg bg-sky-900 md:flex-row md:space-x-8 md:mt-0 md:border-0 dark:bg-gray-900 dark:border-gray-700">
+                    <li>
+                        <a href="/logout"
+                            class="block text-center py-2 pl-3 pr-4 text-sky-400 rounded hover:text-sky-200 p-0 dark:hover:text-blue-500 dark:text-white">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
 
 
@@ -61,22 +65,53 @@
 
     <div class="flex items-center w-full">
         <div class="container mx-auto pt-32">
-                <div class="lg:w-auto lg:order-1 lg:ml-20 flex flex-col items-center lg:items-start">
-                    <h1 class="mb-5 lg:w-auto text-3xl font-extrabold leading-10 text-white text-left">
-                        ADMIN DASHBOARD
-                    </h1>
-                </div>
+            <div class="lg:w-auto lg:order-1 lg:ml-20 flex flex-col items-center lg:items-start">
+                <h1 class="mb-5 lg:w-auto text-3xl font-extrabold leading-10 text-white text-left">
+                    ADMIN DASHBOARD
+                </h1>
+            </div>
+
+            <div id="users" class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th class="px-6 py-3">Email</th>
+                            <th class="px-6 py-3">Role</th>
+                            <th class="px-6 py-3">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody"></tbody>
+                </table>
+            </div>
         </div>
     </div>
 
+    <div id="editModal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+        <div class="absolute inset-0 bg-gray-500 opacity-0"></div>
+        <div class="bg-white p-8 rounded-lg z-10 relative">
 
+            <button id="closeEditModal" class="absolute top-0 right-0 mt-2 mr-2 text-gray-700 cursor-pointer">
+                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                    </path>
+                </svg>
+            </button>
 
-
-
-
-
-
-
+            <h2 class="userName text-2xl font-semibold mb-4">Edit user</h2>
+            <form id="editUserForm">
+                <div class="mb-4">
+                    <label for="editUserEmail" class="block text-sm font-medium text-gray-700">User Email</label>
+                    <input type="text" id="editUserEmail" name="editUserEmail" class="mt-1 p-2 border rounded w-full">
+                </div>
+                <div class="mb-4">
+                    <label for="editUserRole" class="block text-sm font-medium text-gray-700">Role</label>
+                    <input type="text" id="editUserRole" name="editUserRole" class="mt-1 p-2 border rounded w-full">
+                </div>
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save Changes</button>
+            </form>
+        </div>
+    </div>
 
 
 

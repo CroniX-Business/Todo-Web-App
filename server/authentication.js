@@ -78,8 +78,39 @@ export default function configureAuth(passport) {
     })(req, res, next);
   });
 
+  // Registration logic
+  authenticationRouter.post('/register', async (req, res) => {
+    const { email, password } = req.body;
 
-  // Your registration route can be implemented here
+    if (!email || !password) {
+      return res.status(400).json({ success: false, message: 'Email and password are required' });
+    }
+
+    try {
+      const existingUser = await UserModel.findOne({ email });
+
+      if (existingUser) {
+        return res.status(400).json({ success: false, message: 'Email is already in use' });
+      }
+
+      const username = email.split('@')[0];
+
+      const newUser = new UserModel({
+        email: email,
+        username: username,
+        password: password,
+        role: 'user',
+        tasks: [],
+      });
+
+      await newUser.save();
+
+      res.json({ success: true, message: 'User registered successfully', user: newUser, redirect: '/' });
+    } catch (error) {
+      console.error('Error registering user:', error);
+      res.status(500).json({ success: false, message: 'Internal Server Error' });
+    }
+  });
 
   return authenticationRouter;
 }

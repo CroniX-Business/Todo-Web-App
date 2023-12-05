@@ -5,8 +5,9 @@ import bodyParser from 'body-parser';
 
 import router from './router.mjs';
 import authenticationRouter from './authentication.js';
-import connectDB from './database/database.js';
+import adminRouter from './adminManipulation.js'
 
+import connectDB from './database/database.js';
 import User from './database/user.js';
 
 const app = express();
@@ -31,6 +32,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use('/auth', authenticationRouter(passport));
+app.use('/admin', adminRouter);
 app.use('/', router);
 
 app.listen(port, () => {

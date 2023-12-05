@@ -629,6 +629,22 @@ video {
   top: 5rem;
 }
 
+.top-1 {
+  top: 0.25rem;
+}
+
+.top-10 {
+  top: 2.5rem;
+}
+
+.top-2 {
+  top: 0.5rem;
+}
+
+.top-64 {
+  top: 16rem;
+}
+
 .z-10 {
   z-index: 10;
 }
@@ -711,8 +727,20 @@ video {
   margin-top: 2rem;
 }
 
+.mt-1 {
+  margin-top: 0.25rem;
+}
+
 .block {
   display: block;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.inline {
+  display: inline;
 }
 
 .flex {
@@ -721,6 +749,10 @@ video {
 
 .inline-flex {
   display: inline-flex;
+}
+
+.table {
+  display: table;
 }
 
 .grid {
@@ -772,6 +804,10 @@ video {
   height: max-content;
 }
 
+.h-6 {
+  height: 1.5rem;
+}
+
 .max-h-full {
   max-height: 100%;
 }
@@ -810,6 +846,10 @@ video {
 
 .w-full {
   width: 100%;
+}
+
+.w-6 {
+  width: 1.5rem;
 }
 
 .max-w-6xl {
@@ -888,6 +928,10 @@ video {
 
 .overflow-hidden {
   overflow: hidden;
+}
+
+.overflow-x-auto {
+  overflow-x: auto;
 }
 
 .overflow-y-auto {
@@ -1032,6 +1076,11 @@ video {
 
 .bg-white\/30 {
   background-color: rgb(255 255 255 / 0.3);
+}
+
+.bg-gray-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
 }
 
 .object-cover {
@@ -1188,6 +1237,11 @@ video {
   line-height: 1.75rem;
 }
 
+.text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
 .font-black {
   font-weight: 900;
 }
@@ -1295,6 +1349,22 @@ video {
 
 .opacity-50 {
   opacity: 0.5;
+}
+
+.opacity-75 {
+  opacity: 0.75;
+}
+
+.opacity-100 {
+  opacity: 1;
+}
+
+.opacity-95 {
+  opacity: 0.95;
+}
+
+.opacity-0 {
+  opacity: 0;
 }
 
 .shadow {
@@ -1411,6 +1481,11 @@ html, body{
   background-color: rgb(156 163 175 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-gray-50:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity));
+}
+
 .hover\:bg-gray-800:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(31 41 55 / var(--tw-bg-opacity));
@@ -1489,6 +1564,10 @@ html, body{
   --tw-ring-color: rgb(209 213 219 / var(--tw-ring-opacity));
 }
 
+:is([dir="rtl"] .rtl\:text-right) {
+  text-align: right;
+}
+
 @media (prefers-color-scheme: dark) {
   .dark\:border-blue-400 {
     --tw-border-opacity: 1;
@@ -1538,6 +1617,11 @@ html, body{
   .dark\:bg-sky-950 {
     --tw-bg-opacity: 1;
     background-color: rgb(8 47 73 / var(--tw-bg-opacity));
+  }
+
+  .dark\:bg-white {
+    --tw-bg-opacity: 1;
+    background-color: rgb(255 255 255 / var(--tw-bg-opacity));
   }
 
   .dark\:text-blue-500 {
@@ -1627,6 +1711,10 @@ html, body{
 }
 
 @media (min-width: 640px) {
+  .sm\:rounded-lg {
+    border-radius: 0.5rem;
+  }
+
   .sm\:p-8 {
     padding: 2rem;
   }

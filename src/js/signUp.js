@@ -54,61 +54,49 @@ const register = document.addEventListener('DOMContentLoaded', () => {
           return response.json();
         })
         .then((data) => {
+          if (data.success) {
+            handleRegisterSuccess(data.redirect);
+          } else {
+            handleRegisterError(data.message);
+          }
           email.value = "";
           password.value = "";
           repeatPassword.value = "";
-
-          const p = document.createElement("p");
-          p.id = "errorEmail";
-          const text = document.createTextNode("Uspješno ste registrirani");
-          p.className = "text-white text-center";
-          p.appendChild(text);
-
-          form.appendChild(p);
-
-          setTimeout(() => {
-            form.removeChild(p);
-          }, 5000);
         })
         .catch((error) => {
           console.error('Fetch error:', error);
         });
     } else if (!validateEmail(email.value)) {
-      let existingEmail = document.getElementById("errorEmail");
-
-      if (!existingEmail) {
-        const p = document.createElement("p");
-        p.id = "errorEmail";
-        const text = document.createTextNode("Pogrešan oblik email-a");
-        p.className = "mt-5 text-white text-center";
-        p.appendChild(text);
-
-        form.appendChild(p);
-
-        setTimeout(() => {
-          form.removeChild(p);
-        }, 5000);
-      } else {
-        existingEmail.innerText = "Pogrešan oblik email-a";
-      }
+      handleRegisterError("pogrešan format emaila");
     } else if (password.value !== repeatPassword.value) {
-      let existingPass = document.getElementById("errorPass");
-
-      if (!existingPass) {
-        const p = document.createElement("p");
-        p.id = "errorPass";
-        const text = document.createTextNode("lozinke nisu jednake");
-        p.className = "mt-5 text-white text-center";
-        p.appendChild(text);
-
-        form.appendChild(p);
-
-        setTimeout(() => {
-          form.removeChild(p);
-        }, 5000);
-      } else {
-        existingPass.innerText = "lozinke nisu jednake";
-      }
+      handleRegisterError("lozinke nisu jednake");
     }
   });
+
+  const handleRegisterSuccess = (redirectUrl) => {
+    console.log(redirectUrl)
+    if (redirectUrl) {
+      window.location.href = redirectUrl;
+    }
+  }
+  
+  const handleRegisterError = (errorMessage) => {
+    let errorMess = document.getElementById("errorMess");
+  
+    if (!errorMess) {
+      const p = document.createElement("p");
+      p.id = "errorMess";
+      const text = document.createTextNode(errorMessage);
+      p.className = "mt-5 text-white text-center";
+      p.appendChild(text);
+  
+      form.appendChild(p);
+  
+      setTimeout(() => {
+        form.removeChild(p);
+      }, 5000);
+    } else {
+      errorMess.innerText = errorMessage;
+    }
+  }
 });

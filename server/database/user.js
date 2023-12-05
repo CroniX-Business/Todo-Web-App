@@ -1,17 +1,14 @@
 import mongoose from 'mongoose';
 import passportLocalMongoose from 'passport-local-mongoose';
-
-const taskSchema = new mongoose.Schema({
-  taskName: { type: String, required: true },
-  creationDate: { type: String, required: true },
-});
+import TaskModel from './tasks.js';
 
 const userSchema = new mongoose.Schema({
   email: String,
   username: String,
   password: String,
   role: String,
-  tasks: [taskSchema],
+  tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Task' }],
+  logs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Log' }],
 });
 
 userSchema.plugin(passportLocalMongoose, { usernameField: 'email' });
