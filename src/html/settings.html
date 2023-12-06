@@ -64,7 +64,7 @@
 
   <!--CONTENT-->
 
-  <div class="flex w-1/2 mx-auto">
+  <div class="flex lg:w-1/2 w-3/4 mx-auto">
     <div class="container mx-auto pt-32">
       <div class="lg:w-auto lg:ml-20 flex flex-col lg:items-start">
         <h1 id="usernameHeader" class="mb-5 lg:w-auto text-3xl font-extrabold leading-10 text-white text-left">
@@ -73,26 +73,36 @@
       </div>
 
       <div class="settings mt-8 grid gap-2">
-        <div class="setting-row grid grid-cols-2 items-center">
+
+        <div class="setting-row grid grid-cols-3 items-center">
           <label for="changeName" class="text-white mb-2">Change Name</label>
           <input type="text" id="changeName" name="changeName" class="p-2 border border-gray-300 rounded-md">
+          <button onclick="submitChange('changeName')"
+            class="w-min bg-blue-500 text-white py-2 px-4 ml-4 rounded-md">Confirm</button>
         </div>
-      
-        <div class="setting-row grid grid-cols-2 items-center">
+
+        <div class="setting-row grid grid-cols-3 items-center">
           <label for="changeEmail" class="text-white mb-2">Change Email</label>
           <input type="email" id="changeEmail" name="changeEmail" class="p-2 border border-gray-300 rounded-md">
+          <button onclick="submitChange('changeEmail')"
+            class="w-min bg-blue-500 text-white py-2 px-4 ml-4 rounded-md">Confirm</button>
         </div>
-      
-        <div class="setting-row grid grid-cols-2 items-center">
+
+        <div class="setting-row grid grid-cols-3 items-center">
           <label for="changePassword" class="text-white mb-2">Change Password</label>
-          <input type="password" id="changePassword" name="changePassword" class="p-2 border border-gray-300 rounded-md">
+          <input type="password" id="changePassword" name="changePassword"
+            class="p-2 border border-gray-300 rounded-md">
+          <button onclick="submitChange('changePassword')"
+            class="w-min bg-blue-500 text-white py-2 px-4 ml-4 rounded-md">Confirm</button>
         </div>
-      
-        <div class="setting-row grid grid-cols-2 items-center">
+
+        <div class="setting-row grid grid-cols-3 items-center">
           <label class="text-white mb-2">Account Deactivation</label>
-          <button class="col-span-2 bg-red-500 text-white py-2 px-4 rounded-md">Deactivate Account</button>
+          <button onclick="submitChange('deactivateAccount')"
+            class="bg-red-500 text-white py-2 px-4 rounded-md">Deactivate Account</button>
         </div>
-      </div>      
+
+      </div>
     </div>
   </div>
 

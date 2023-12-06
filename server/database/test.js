@@ -8,9 +8,9 @@ connectDB();
 
 // Create a user with empty tasks
 const user = new UserModel({
-  email: 'user@example.com',
+  email: 'user4@example.com',
   username: 'user',
-  password: 'password',
+  password: 'p',
   role: 'user',
   tasks: [],
 });
@@ -23,13 +23,15 @@ user.save()
     // Create tasks and associate them with the user
     const task1 = await TaskModel.create({
       taskName: 'Task 1',
-      creationDate: '2023-01-01',
+      taskDesc: 'description of task 1',
+      creationDate: '06-12',
       user: savedUser._id,
     });
 
     const task2 = await TaskModel.create({
       taskName: 'Task 2',
-      creationDate: '2023-01-01',
+      taskDesc: 'description of task 2',
+      creationDate: '06-12',
       user: savedUser._id,
     });
 

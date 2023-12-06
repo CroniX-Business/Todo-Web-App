@@ -78,7 +78,6 @@ export default function configureAuth(passport) {
     })(req, res, next);
   });
 
-  // Registration logic
   authenticationRouter.post('/register', async (req, res) => {
     const { email, password } = req.body;
 
@@ -90,7 +89,7 @@ export default function configureAuth(passport) {
       const existingUser = await UserModel.findOne({ email });
 
       if (existingUser) {
-        return res.status(400).json({ success: false, message: 'Email is already in use' });
+        return res.json({ success: false, message: 'Email is already in use' });
       }
 
       const username = email.split('@')[0];
