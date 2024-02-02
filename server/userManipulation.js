@@ -55,6 +55,11 @@ userRouter.post('/task/save', async (req, res) => {
             return;
         }
 
+        if (user.taskCount >= 10) {
+            res.status(400).json({ success: false, message: 'Task limit reached. You cannot add more tasks.' });
+            return;
+        }
+
         const newTask = new TaskModel({
             taskName,
             taskDesc,
@@ -65,9 +70,10 @@ userRouter.post('/task/save', async (req, res) => {
         const savedTask = await newTask.save();
 
         user.tasks.push(savedTask._id);
+        user.taskCount += 1;
         await user.save();
 
-        res.json({ success: true, task: savedTask });
+        res.json({ success: true, taskCount: user.taskCount });
     } catch (error) {
         console.error('Error creating and saving task:', error);
         res.status(500).json({ success: false, message: 'Internal Server Error' });
@@ -99,6 +105,7 @@ userRouter.post('/task/delete', async (req, res) => {
         }
 
         user.tasks = user.tasks.filter(task => task.toString() !== taskId);
+        user.taskCount -= 1;
         await user.save();
 
         res.json({ success: true, task: deletedTask });

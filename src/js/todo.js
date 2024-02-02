@@ -166,8 +166,6 @@ document.getElementById('taskForm').addEventListener('submit', function (event) 
   document.getElementById('taskDescription').value = '';
 
   saveTaskToServer(taskTitle, taskDescription, formattedDate);
-
-  taskCount++;
 });
 
 function sortTasksByTitle() {
@@ -206,6 +204,11 @@ function TasksFromServer(formattedDate) {
         tasks.forEach(task => {
           const taskElement = createTaskElement(task.taskName, task.taskDesc, task._id);
           document.getElementById('checkboxContainer').appendChild(taskElement);
+
+          if (tasks.taskCount >= 10) {
+            console.log("stop")
+            document.getElementById('addTaskButton').disabled = true;
+          }
           if (task.finished) {
             const taskElement = document.querySelector(`[data-task-id="${task._id}"]`);
             if (taskElement) {
@@ -216,7 +219,6 @@ function TasksFromServer(formattedDate) {
               }
             }
           }
-          taskCount++;
         });
       } else {
         console.log('No tasks found for the given date.');
