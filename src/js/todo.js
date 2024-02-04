@@ -136,7 +136,6 @@ function createTaskElement(taskTitle, taskDescription, taskId) {
     deleteTaskOnServer(taskId);
 
     taskElement.remove();
-    taskCount--;
   });
   rightSide.appendChild(deleteButton);
 
@@ -145,27 +144,20 @@ function createTaskElement(taskTitle, taskDescription, taskId) {
   return taskElement;
 }
 
-var taskCount = 0;
-
 document.getElementById('taskForm').addEventListener('submit', function (event) {
   event.preventDefault();
 
-  if (taskCount >= 10) {
-    alert('Task limit reached. You cannot add more tasks.');
-    return;
-  }
-
   var taskTitle = document.getElementById('taskTitle').value;
   var taskDescription = document.getElementById('taskDescription').value;
+  
+  // var taskElement = createTaskElement(taskTitle, taskDescription);
+  // document.getElementById('checkboxContainer').appendChild(taskElement);
 
-  var taskElement = createTaskElement(taskTitle, taskDescription);
-
-  document.getElementById('checkboxContainer').appendChild(taskElement);
-
+  saveTaskToServer(taskTitle, taskDescription, formattedDate);
+  
   document.getElementById('taskTitle').value = '';
   document.getElementById('taskDescription').value = '';
 
-  saveTaskToServer(taskTitle, taskDescription, formattedDate);
 });
 
 function sortTasksByTitle() {
@@ -184,10 +176,7 @@ function sortTasksByTitle() {
 }
 
 function TasksFromServer(formattedDate) {
-
   console.log(formattedDate);
-
-  document.getElementById('checkboxContainer').innerHTML = '';
 
   fetch('/user/tasks', {
     method: 'POST',
@@ -198,31 +187,33 @@ function TasksFromServer(formattedDate) {
   })
     .then(response => response.json())
     .then(data => {
-      const tasks = data.tasks;
+      const tasksFromServer = data.tasks;
+      const checkboxContainer = document.getElementById('checkboxContainer');
+      const existingTasks = Array.from(checkboxContainer.children);
 
-      if (Array.isArray(tasks) && tasks.length > 0) {
-        tasks.forEach(task => {
+      // Iterate through tasks received from server
+      tasksFromServer.forEach(task => {
+        const existingTaskElement = existingTasks.find(element => element.dataset.taskId === task._id);
+
+        if (!existingTaskElement) { // If task is not already displayed, create new task element
           const taskElement = createTaskElement(task.taskName, task.taskDesc, task._id);
-          document.getElementById('checkboxContainer').appendChild(taskElement);
+          checkboxContainer.appendChild(taskElement);
+        } else if (task.finished) { // If task is finished, update its style
+          existingTaskElement.classList.add('bg-gray-700');
+          const finishButton = existingTaskElement.querySelector('.finish-button');
+          if (finishButton) {
+            finishButton.remove();
+          }
+        }
+      });
 
-          if (tasks.taskCount >= 10) {
-            console.log("stop")
-            document.getElementById('addTaskButton').disabled = true;
-          }
-          if (task.finished) {
-            const taskElement = document.querySelector(`[data-task-id="${task._id}"]`);
-            if (taskElement) {
-              taskElement.classList.add('bg-gray-700');
-              const finishButton = taskElement.querySelector('.finish-button');
-              if (finishButton) {
-                finishButton.remove();
-              }
-            }
-          }
-        });
-      } else {
-        console.log('No tasks found for the given date.');
-      }
+      // Remove tasks that are no longer present in the server response
+      existingTasks.forEach(existingTask => {
+        const taskId = existingTask.dataset.taskId;
+        if (!tasksFromServer.some(task => task._id === taskId)) {
+          existingTask.remove();
+        }
+      });
     })
     .catch(error => {
       console.error('Error fetching tasks:', error);
@@ -230,6 +221,7 @@ function TasksFromServer(formattedDate) {
 }
 
 function saveTaskToServer(taskName, taskDesc, creationDate) {
+
   fetch('/user/task/save', {
     method: 'POST',
     headers: {
@@ -272,15 +264,26 @@ function finishTaskOnServer(taskId) {
     .then(response => response.json())
     .then(updatedTask => {
       console.log('Task marked as finished:', updatedTask);
-      // Optionally, update the UI to reflect the finished state
-      /*const taskElement = document.querySelector(`[data-task-id="${taskId}"]`);
-      if (taskElement) {
-        taskElement.classList.add('bg-gray-700');
-        const finishButton = taskElement.querySelector('.finish-button');
-        if (finishButton) {
-          finishButton.remove();
-        }
-      }*/
     })
     .catch(error => console.error('Error marking task as finished:', error));
+}
+
+function searchTasks() {
+  const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+  filterTasks(searchQuery);
+}
+
+function filterTasks(searchQuery) {
+  const tasks = document.getElementById('checkboxContainer').children;
+
+  Array.from(tasks).forEach(task => {
+      const taskTitle = task.querySelector('div > div > div:first-child').textContent.toLowerCase();
+      const taskDescription = task.querySelector('div > div > div:nth-child(2)').textContent.toLowerCase();
+
+      if (taskTitle.includes(searchQuery) || taskDescription.includes(searchQuery)) {
+          task.style.display = '';
+      } else {
+          task.style.display = 'none';
+      }
+  });
 }

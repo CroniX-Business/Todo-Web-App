@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
   username: String,
   password: String,
   role: String,
-  taskCount: { type: Number, default: 0 },
+  taskCount: { type: Number, default: 10 },
   tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Task' }],
   logs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Log' }],
 });

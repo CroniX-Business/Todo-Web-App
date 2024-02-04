@@ -76,7 +76,7 @@
         <div class="container ml-10 mr-10 pt-32 relative">
             <div class="lg:w-auto flex flex-col lg:items-start">
                 <h1 id="usernameHeader" class="mb-5 lg:w-auto text-3xl font-extrabold leading-10 text-white text-left">
-                    Hello 
+                    Hello
                 </h1>
             </div>
 
@@ -87,13 +87,12 @@
                         <button onclick="prevDay()" class="text-gray-600 hover:text-gray-800">&lt;</button>
                         <div id="currentDate" class="text-xl font-bold text-green-500"></div>
                         <button onclick="nextDay()" class="text-gray-600 hover:text-gray-800">&gt;</button>
-                      </div>
+                    </div>
 
                     <!-- Modal toggle -->
                     <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal"
                         class="block-inline text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                        type="button"
-                        id="addTaskButton">
+                        type="button" id="addTaskButton">
                         New Task
                     </button>
 
@@ -101,6 +100,8 @@
                         class="block-inline text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
                         Sort by Title
                     </button>
+
+                    <input type="text" id="searchInput" placeholder="Search tasks..." oninput="searchTasks()">
 
                     <!-- Main modal -->
                     <div id="authentication-modal" tabindex="-1" aria-hidden="true"
