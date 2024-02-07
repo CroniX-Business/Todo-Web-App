@@ -62,3 +62,4 @@ user.save()
     // Close the database connection
     process.exit();
   });
+

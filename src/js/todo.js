@@ -83,7 +83,7 @@ function formatDate(date) {
   return `${day}-${month}`;
 }
 
-function createTaskElement(taskTitle, taskDescription, taskId) {
+function createTaskElement(taskTitle, taskDescription, creationDate, taskId) {
   var taskElement = document.createElement('div');
   taskElement.dataset.taskId = taskId;
   taskElement.className = 'p-2.5 bg-gray-200 rounded-lg flex items-center justify-between';
@@ -108,7 +108,7 @@ function createTaskElement(taskTitle, taskDescription, taskId) {
   rightSide.className = 'flex items-center';
 
   var timeElement = document.createElement('div');
-  timeElement.textContent = formattedDate;
+  timeElement.textContent = creationDate;
   timeElement.style.opacity = '0.7';
   timeElement.className = 'mr-2';
   rightSide.appendChild(timeElement);
@@ -149,14 +149,16 @@ document.getElementById('taskForm').addEventListener('submit', function (event) 
 
   var taskTitle = document.getElementById('taskTitle').value;
   var taskDescription = document.getElementById('taskDescription').value;
+  var taskTime = document.getElementById('taskTime').value;
   
   // var taskElement = createTaskElement(taskTitle, taskDescription);
   // document.getElementById('checkboxContainer').appendChild(taskElement);
 
-  saveTaskToServer(taskTitle, taskDescription, formattedDate);
+  saveTaskToServer(taskTitle, taskDescription, formattedDate, taskTime);
   
   document.getElementById('taskTitle').value = '';
   document.getElementById('taskDescription').value = '';
+  //document.getElementById('taskDescription').value = '';
 
 });
 
@@ -165,7 +167,7 @@ function sortTasksByTitle() {
   const tasks = Array.from(checkboxContainer.children);
 
   tasks.sort((a, b) => {
-    const titleA = a.querySelector('div > div > div:first-child').textContent.toLowerCase();
+    const titleA = a.querySelector('div > div >div:first-child').textContent.toLowerCase();
     const titleB = b.querySelector('div > div > div:first-child').textContent.toLowerCase();
     return titleA.localeCompare(titleB);
   });
@@ -174,6 +176,48 @@ function sortTasksByTitle() {
 
   tasks.forEach(task => checkboxContainer.appendChild(task));
 }
+
+function sortTasksByTime() {
+  const checkboxContainer = document.getElementById('checkboxContainer');
+  const tasks = Array.from(checkboxContainer.children);
+
+  tasks.sort((a, b) => {
+      const timeElementA = a.querySelector('.flex.items-center:last-child').textContent.trim();
+      const timeElementB = b.querySelector('.flex.items-center:last-child').textContent.trim();
+      return compareTime(timeElementA, timeElementB);
+  });
+
+  checkboxContainer.innerHTML = '';
+
+  tasks.forEach(task => checkboxContainer.appendChild(task));
+}
+
+function compareTime(timeA, timeB) {
+  // Split the time string into date and time components
+  const [dateA, timePartA] = timeA.split(' '); // Split by space to get date and time
+  const [dateB, timePartB] = timeB.split(' '); // Split by space to get date and time
+
+  // Split the time part into hours and minutes
+  const [hoursA, minutesA] = timePartA.split(':').map(Number); // Convert to numbers
+  const [hoursB, minutesB] = timePartB.split(':').map(Number); // Convert to numbers
+
+  // Compare the dates (not included in the initial function)
+  if (dateA !== dateB) {
+    // If the dates are different, return the result of comparing the dates
+    return dateA.localeCompare(dateB);
+  }
+
+  // If dates are equal, compare the time
+  // Compare the hours first
+  if (hoursA !== hoursB) {
+    return hoursA - hoursB;
+  }
+
+  // If hours are equal, compare minutes
+  return minutesA - minutesB;
+}
+
+
 
 function TasksFromServer(formattedDate) {
   console.log(formattedDate);
@@ -196,7 +240,7 @@ function TasksFromServer(formattedDate) {
         const existingTaskElement = existingTasks.find(element => element.dataset.taskId === task._id);
 
         if (!existingTaskElement) { // If task is not already displayed, create new task element
-          const taskElement = createTaskElement(task.taskName, task.taskDesc, task._id);
+          const taskElement = createTaskElement(task.taskName, task.taskDesc, task.creationDate, task._id);
           checkboxContainer.appendChild(taskElement);
         } else if (task.finished) { // If task is finished, update its style
           existingTaskElement.classList.add('bg-gray-700');
@@ -220,14 +264,14 @@ function TasksFromServer(formattedDate) {
     });
 }
 
-function saveTaskToServer(taskName, taskDesc, creationDate) {
+function saveTaskToServer(taskName, taskDesc, creationDate, taskTime) {
 
   fetch('/user/task/save', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ taskName, taskDesc, creationDate }),
+    body: JSON.stringify({ taskName, taskDesc, creationDate, taskTime }),
   })
     .then(response => response.json())
     .then(savedTask => {

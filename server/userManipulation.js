@@ -21,7 +21,12 @@ async function getTasksByDate(userEmail, specificDate, res) {
         const user = await UserModel.findOne({ email: userEmail })
             .populate({
                 path: 'tasks',
-                match: { creationDate: specificDate },
+                match: {
+                    creationDate: {
+                        $regex: "^" + specificDate, // Use regex to match the date part
+                        $options: "i" // Case insensitive
+                    }
+                },
                 populate: { path: 'logs' },
             })
             .exec();
@@ -39,8 +44,10 @@ async function getTasksByDate(userEmail, specificDate, res) {
 }
 
 userRouter.post('/task/save', async (req, res) => {
-    const { taskName, taskDesc, creationDate } = req.body;
+    const { taskName, taskDesc, creationDate, taskTime } = req.body;
     const userEmail = req.user.email;
+
+    const DateTime = creationDate + " " + taskTime;
 
     if (!taskName || !creationDate) {
         res.status(400).json({ success: false, message: 'Task name or creation date not provided' });
@@ -65,7 +72,7 @@ userRouter.post('/task/save', async (req, res) => {
         const newTask = new TaskModel({
             taskName,
             taskDesc,
-            creationDate,
+            creationDate: DateTime,
             user: user._id,
         });
 
@@ -118,38 +125,38 @@ userRouter.post('/task/delete', async (req, res) => {
 userRouter.post('/task/finished', async (req, res) => {
     const { taskId } = req.body;
     const userEmail = req.user.email;
-  
+
     if (!taskId) {
-      res.status(400).json({ success: false, message: 'Task ID not provided' });
-      return;
+        res.status(400).json({ success: false, message: 'Task ID not provided' });
+        return;
     }
-  
+
     try {
-      const user = await UserModel.findOne({ email: userEmail });
-  
-      if (!user) {
-        res.status(404).json({ success: false, message: 'User not found' });
-        return;
-      }
-  
-      const updatedTask = await TaskModel.findByIdAndUpdate(
-        taskId,
-        { $set: { finished: true } },
-        { new: true }
-      );
-  
-      if (!updatedTask) {
-        res.status(404).json({ success: false, message: 'Task not found' });
-        return;
-      }
-  
-      res.json({ success: true, task: updatedTask });
+        const user = await UserModel.findOne({ email: userEmail });
+
+        if (!user) {
+            res.status(404).json({ success: false, message: 'User not found' });
+            return;
+        }
+
+        const updatedTask = await TaskModel.findByIdAndUpdate(
+            taskId,
+            { $set: { finished: true } },
+            { new: true }
+        );
+
+        if (!updatedTask) {
+            res.status(404).json({ success: false, message: 'Task not found' });
+            return;
+        }
+
+        res.json({ success: true, task: updatedTask });
     } catch (error) {
-      console.error('Error updating task:', error);
-      res.status(500).json({ success: false, message: 'Internal Server Error' });
+        console.error('Error updating task:', error);
+        res.status(500).json({ success: false, message: 'Internal Server Error' });
     }
-  });
-  
+});
+
 
 
 userRouter.post('/settings', async (req, res) => {
