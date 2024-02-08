@@ -2,32 +2,33 @@ const currentYear = new Date().getFullYear();
 document.getElementById('year').textContent = currentYear;
 
 const showPassword = () => {
-  var checkbox = document.getElementById('toggle');
-  var label = document.getElementById('toggleLabel');
-  var passwordInput = document.getElementById('password');
-
+  const checkbox = document.getElementById('toggle');
+  const label = document.getElementById('toggleLabel');
+  const passwordInput = document.getElementById('password');
 
   if (checkbox.checked) {
-    label.innerText = 'hide';
+    label.textContent = 'hide';
     passwordInput.type = 'text';
   } else {
-    label.innerText = 'show';
+    label.textContent = 'show';
     passwordInput.type = 'password';
   }
 };
 
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.querySelector('form');
+  const emailInput = document.getElementById('email');
+  const passwordInput = document.getElementById('password');
 
   form.addEventListener('submit', function (event) {
     event.preventDefault();
 
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+    const email = emailInput.value;
+    const password = passwordInput.value;
 
     const userData = {
-      email: email,
-      password: password
+      email,
+      password
     };
 
     fetch('/auth/login', {
@@ -46,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
       .then((data) => {
         if (!data.success) {
           handleLoginError(data.message);
-        } else if (data.success) {
+        } else {
           handleLoginSuccess(data.redirect);
         }
       })
@@ -61,9 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!existingParagraph) {
       const p = document.createElement("p");
       p.id = "errorParagraph";
-      const text = document.createTextNode(errorMessage);
+      p.textContent = errorMessage;
       p.className = "text-white text-center";
-      p.appendChild(text);
 
       form.appendChild(p);
 
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
         form.removeChild(p);
       }, 5000);
     } else {
-      existingParagraph.innerText = errorMessage;
+      existingParagraph.textContent = errorMessage;
     }
   }
 

@@ -9,11 +9,9 @@ function getCookie(name) {
   return null;
 }
 
-const username = getCookie('username');
-updateDisplayedUsername(username);
+const usernameHeader = document.getElementById('usernameHeader');
 
 function updateDisplayedUsername(newUsername) {
-  const usernameHeader = document.getElementById('usernameHeader');
   if (usernameHeader) {
     usernameHeader.innerText = `${newUsername} settings`;
   } else {
@@ -21,8 +19,10 @@ function updateDisplayedUsername(newUsername) {
   }
 }
 
+updateDisplayedUsername(getCookie('username'));
+
 function submitChange(setting) {
-  const paramField = document.getElementById(`${setting}`);
+  const paramField = document.getElementById(setting);
   let param = '';
 
   if (setting === 'deactivateAccount') {
@@ -35,7 +35,6 @@ function submitChange(setting) {
     param = paramField.value;
   }
 
-
   fetch('/user/settings', {
     method: 'POST',
     body: JSON.stringify({ setting, param }),
@@ -43,31 +42,24 @@ function submitChange(setting) {
       'Content-Type': 'application/json',
     },
   })
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
     .then(data => {
-      if(data.success){
+      if (data.success) {
         if (setting === 'changeName') {
-          paramField.value = "";
-          const updatedUsername = getCookie('username');;
+          paramField.value = '';
+          const updatedUsername = getCookie('username');
           updateDisplayedUsername(updatedUsername);
-        }else if(setting === 'deactivateAccount'){
+        } else if (setting === 'deactivateAccount' || setting === 'changeEmail') {
           window.location.href = data.redirect;
-        }else if(setting === 'changeEmail'){
-          window.location.href = data.redirect;
-        }else{
-          paramField.value = "";
+        } else {
+          paramField.value = '';
         }
       }
-    
     })
     .catch(error => console.error('Error:', error));
-}
-
-function updateDisplayedUsername(newUsername) {
-  const usernameHeader = document.getElementById('usernameHeader');
-  if (usernameHeader) {
-    usernameHeader.innerText = `${newUsername} settings`;
-  } else {
-    console.log('Username header not found');
-  }
 }

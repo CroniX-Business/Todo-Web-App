@@ -3,36 +3,54 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 const fetchUsers = () => {
-  fetch('/admin/users', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
+  fetch('/admin/users')
     .then(response => response.json())
-    .then(users => {
-      console.log(users);
-      const usersTableBody = document.getElementById('usersTableBody');
-      usersTableBody.innerHTML = ''; // Clear existing rows
+    .then(displayUsers)
+    .catch(handleError);
+}
 
-      users.forEach(user => {
-        const row = document.createElement('tr');
-        row.className = 'bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600';
-        row.setAttribute('data-user-id', user._id); // Add data-user-id attribute
-        row.innerHTML = `
-          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">${user.email}</td>
-          <td class="px-6 py-4">${user.role}</td>
-          <td class="px-6 py-4">
-            <button onclick="editUser('${user._id}')">Edit</button>
-            <button onclick="deleteUser('${user._id}')">Delete</button>
-          </td>
-        `;
-        usersTableBody.appendChild(row);
-      });
-    })
-    .catch(error => {
-      console.error('Error fetching users:', error);
-    });
+const displayUsers = (users) => {
+  const usersTableBody = document.getElementById('usersTableBody');
+  usersTableBody.innerHTML = '';
+
+  users.forEach(user => {
+    const row = createUserRow(user);
+    usersTableBody.appendChild(row);
+  });
+}
+
+const createUserRow = (user) => {
+  const row = document.createElement('tr');
+  row.className = 'bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600';
+  row.setAttribute('data-user-id', user._id);
+
+  const emailCell = document.createElement('td');
+  emailCell.textContent = user.email;
+  emailCell.className = 'px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white';
+  row.appendChild(emailCell);
+
+  const roleCell = document.createElement('td');
+  roleCell.textContent = user.role;
+  roleCell.className = 'px-6 py-4';
+  row.appendChild(roleCell);
+
+  const actionsCell = document.createElement('td');
+  actionsCell.className = 'px-6 py-4';
+  const editButton = createActionButton('Edit', () => editUser(user._id));
+  const deleteButton = createActionButton('Delete', () => deleteUser(user._id));
+  actionsCell.appendChild(editButton);
+  actionsCell.appendChild(document.createTextNode('\u00A0'));
+  actionsCell.appendChild(deleteButton);
+  row.appendChild(actionsCell);
+
+  return row;
+}
+
+const createActionButton = (text, onClick) => {
+  const button = document.createElement('button');
+  button.textContent = text;
+  button.addEventListener('click', onClick);
+  return button;
 }
 
 const deleteUser = (userId) => {
@@ -43,23 +61,17 @@ const deleteUser = (userId) => {
   }
 
   fetch(`/admin/users/${userId}`, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    method: 'DELETE'
   })
     .then(response => response.json())
     .then(result => {
       console.log(result);
-
       const deletedRow = document.querySelector(`tr[data-user-id="${userId}"]`);
       if (deletedRow) {
         deletedRow.remove();
       }
     })
-    .catch(error => {
-      console.error('Error deleting user:', error);
-    });
+    .catch(handleError);
 }
 
 const editUser = (userId) => {
@@ -71,39 +83,39 @@ const editUser = (userId) => {
   editUserForm.addEventListener('submit', function (event) {
     event.preventDefault();
 
+    const userEmail = editUserForm.elements.editUserEmail.value;
+    const userRole = editUserForm.elements.editUserRole.value;
+
     fetch(`/admin/users/${userId}`, {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        userEmail: editUserForm.elements.editUserEmail.value,
-        userRole: editUserForm.elements.editUserRole.value,
-      }),
+      body: JSON.stringify({ userEmail, userRole })
     })
       .then(response => response.json())
       .then(result => {
         console.log(result);
 
-
-        if(result.success){
+        if (result.success) {
           fetchUsers();
         } else {
-          alert(result.message)
+          alert(result.message);
         }
 
-        editUserForm.elements.editUserEmail.value = "";
-        editUserForm.elements.editUserRole.value = "";
-        
+        editUserForm.reset();
         editModal.classList.add('hidden');
       })
-      .catch(error => {
-        console.error('Error updating user:', error);
-      });
+      .catch(handleError);
   });
 
   const closeEditModalBtn = document.getElementById('closeEditModal');
   closeEditModalBtn.addEventListener('click', function () {
     editModal.classList.add('hidden');
   });
+}
+
+const handleError = (error) => {
+  console.error('An error occurred:', error);
+  // Display a user-friendly error message to the user
 }

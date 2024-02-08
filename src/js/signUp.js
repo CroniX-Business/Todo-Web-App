@@ -1,11 +1,13 @@
+// signup.js
+
 const currentYear = new Date().getFullYear();
 document.getElementById('year').textContent = currentYear;
 
 const showPassword = () => {
-  var checkbox = document.getElementById('toggle');
-  var label = document.getElementById('toggleLabel');
-  var passwordInput = document.getElementById('password');
-  var repeatPasswordInput = document.getElementById('repeat-password');
+  const checkbox = document.getElementById('toggle');
+  const label = document.getElementById('toggleLabel');
+  const passwordInput = document.getElementById('password');
+  const repeatPasswordInput = document.getElementById('repeat-password');
 
   if (checkbox.checked) {
     label.innerText = 'hide';
@@ -19,12 +21,10 @@ const showPassword = () => {
 };
 
 const validateEmail = (email) => {
-  return email.match(
-    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  );
+  return email.match(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
 };
 
-const register = document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
   const form = document.querySelector('form');
 
   form.addEventListener('submit', function (event) {
@@ -34,7 +34,7 @@ const register = document.addEventListener('DOMContentLoaded', () => {
     const password = document.getElementById('password');
     const repeatPassword = document.getElementById('repeat-password');
 
-    if (validateEmail(email.value) && (password.value === repeatPassword.value)) {
+    if (validateEmail(email.value) && password.value === repeatPassword.value) {
       const userData = {
         email: email.value,
         password: password.value,
@@ -65,20 +65,20 @@ const register = document.addEventListener('DOMContentLoaded', () => {
         })
         .catch((error) => {
           console.error('Fetch error:', error);
+          handleRegisterError('An error occurred while processing your request.');
         });
     } else if (!validateEmail(email.value)) {
-      handleRegisterError("pogrešan format emaila");
+      handleRegisterError("Invalid email format");
     } else if (password.value !== repeatPassword.value) {
-      handleRegisterError("lozinke nisu jednake");
+      handleRegisterError("Passwords do not match");
     }
   });
 
   const handleRegisterSuccess = (redirectUrl) => {
-    console.log(redirectUrl)
     if (redirectUrl) {
       window.location.href = redirectUrl;
     }
-  }
+  };
   
   const handleRegisterError = (errorMessage) => {
     let errorMess = document.getElementById("errorMess");
@@ -98,5 +98,5 @@ const register = document.addEventListener('DOMContentLoaded', () => {
     } else {
       errorMess.innerText = errorMessage;
     }
-  }
+  };
 });

@@ -1,35 +1,14 @@
 function getCookie(name) {
   const cookies = document.cookie.split(';');
-  for (let i = 0; i < cookies.length; i++) {
-    const cookie = cookies[i].trim();
-    if (cookie.startsWith(`${name}=`)) {
-      return cookie.substring(name.length + 1);
-    }
-  }
-  return null;
+  const cookie = cookies.find(cookie => cookie.trim().startsWith(`${name}=`));
+  return cookie ? cookie.substring(name.length + 1) : null;
 }
 
 const username = getCookie('username');
 
 const usernameHeader = document.getElementById('usernameHeader');
 if (usernameHeader && username) {
-  usernameHeader.innerText = `${username} settings`;
-}
-
-function getCurrentDateTime() {
-  const now = new Date();
-
-  const day = String(now.getDate()).padStart(2, '0');
-  const month = String(now.getMonth() + 1).padStart(2, '0'); // Month is zero-based
-  const year = now.getFullYear();
-
-  const hours = String(now.getHours()).padStart(2, '0');
-  const minutes = String(now.getMinutes()).padStart(2, '0');
-  const seconds = String(now.getSeconds()).padStart(2, '0');
-
-  const formattedDateTime = `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
-
-  return formattedDateTime;
+  usernameHeader.textContent = `${username} settings`;
 }
 
 let currentDate = new Date();
@@ -39,8 +18,11 @@ updateDate();
 
 function updateDate() {
   formattedDate = formatDate(currentDate);
-  document.getElementById('currentDate').innerText = formattedDate;
-  document.getElementById('currentDate').classList.toggle('text-green-500', isCurrentDay());
+  const currentDateElement = document.getElementById('currentDate');
+  if (currentDateElement) {
+    currentDateElement.innerText = formattedDate;
+    currentDateElement.classList.toggle('text-green-500', isCurrentDay());
+  }
 
   TasksFromServer(formattedDate);
 }
@@ -83,63 +65,41 @@ function formatDate(date) {
   return `${day}-${month}`;
 }
 
+
 function createTaskElement(taskTitle, taskDescription, creationDate, taskId) {
-  var taskElement = document.createElement('div');
+  const taskElement = document.createElement('div');
   taskElement.dataset.taskId = taskId;
   taskElement.className = 'p-2.5 bg-gray-200 rounded-lg flex items-center justify-between';
 
-  var leftSide = document.createElement('div');
-  leftSide.className = 'flex items-center';
+  const leftSideHTML = `
+    <div class="flex items-center">
+      <div class="mr-2">${taskTitle}</div>
+      <div style="opacity: 0.7;" class="mr-2">∙ ${taskDescription}</div>
+    </div>
+  `;
+  taskElement.innerHTML += leftSideHTML;
 
-  var titleElement = document.createElement('div');
-  titleElement.textContent = taskTitle;
-  titleElement.className = 'mr-2';
-  leftSide.appendChild(titleElement);
+  const rightSideHTML = `
+    <div class="flex items-center">
+      <div style="opacity: 0.7;" class="mr-2">${creationDate}</div>
+      <button class="mr-2 finish-button"><i class="fa-solid fa-check text-green-500"></i></button>
+      <button><i class="fa-solid fa-x text-red-500"></i></button>
+    </div>
+  `;
+  taskElement.innerHTML += rightSideHTML;
 
-  var descriptionElement = document.createElement('div');
-  descriptionElement.textContent = `∙ ${taskDescription}`;
-  descriptionElement.style.opacity = '0.7';
-  descriptionElement.className = 'mr-2';
-  leftSide.appendChild(descriptionElement);
-
-  taskElement.appendChild(leftSide);
-
-  var rightSide = document.createElement('div');
-  rightSide.className = 'flex items-center';
-
-  var timeElement = document.createElement('div');
-  timeElement.textContent = creationDate;
-  timeElement.style.opacity = '0.7';
-  timeElement.className = 'mr-2';
-  rightSide.appendChild(timeElement);
-
-  var finishButton = document.createElement('button');
-  finishButton.innerHTML = '<i class="fa-solid fa-check text-green-500"></i>';
-  finishButton.className = 'mr-2 finish-button';
-  finishButton.addEventListener('click', function () {
+  taskElement.querySelector('.finish-button').addEventListener('click', function () {
     taskElement.classList.add('bg-gray-700');
-
     const taskId = taskElement.dataset.taskId;
-
     finishTaskOnServer(taskId);
-
-    finishButton.remove();
+    this.remove();
   });
-  rightSide.appendChild(finishButton);
 
-  var deleteButton = document.createElement('button');
-  deleteButton.innerHTML = '<i class="fa-solid fa-x text-red-500"></i>';
-  deleteButton.addEventListener('click', function () {
+  taskElement.querySelector('.fa-x').addEventListener('click', function () {
     const taskId = taskElement.dataset.taskId;
-    console.log(taskId);
-
     deleteTaskOnServer(taskId);
-
     taskElement.remove();
   });
-  rightSide.appendChild(deleteButton);
-
-  taskElement.appendChild(rightSide);
 
   return taskElement;
 }
@@ -147,32 +107,34 @@ function createTaskElement(taskTitle, taskDescription, creationDate, taskId) {
 document.getElementById('taskForm').addEventListener('submit', function (event) {
   event.preventDefault();
 
-  var taskTitle = document.getElementById('taskTitle').value;
-  var taskDescription = document.getElementById('taskDescription').value;
-  var taskTime = document.getElementById('taskTime').value;
-  
-  // var taskElement = createTaskElement(taskTitle, taskDescription);
-  // document.getElementById('checkboxContainer').appendChild(taskElement);
+  // Cache DOM elements for reuse
+  const taskTitleInput = document.getElementById('taskTitle');
+  const taskDescriptionInput = document.getElementById('taskDescription');
+  const taskTimeInput = document.getElementById('taskTime');
 
+  // Extract values from input fields
+  const taskTitle = taskTitleInput.value;
+  const taskDescription = taskDescriptionInput.value;
+  const taskTime = taskTimeInput.value;
+
+  // Call function to save task to server
   saveTaskToServer(taskTitle, taskDescription, formattedDate, taskTime);
-  
-  document.getElementById('taskTitle').value = '';
-  document.getElementById('taskDescription').value = '';
-  //document.getElementById('taskDescription').value = '';
 
+  // Clear input fields after saving task
+  taskTitleInput.value = '';
+  taskDescriptionInput.value = '';
 });
+
 
 function sortTasksByTitle() {
   const checkboxContainer = document.getElementById('checkboxContainer');
   const tasks = Array.from(checkboxContainer.children);
 
   tasks.sort((a, b) => {
-    const titleA = a.querySelector('div > div >div:first-child').textContent.toLowerCase();
-    const titleB = b.querySelector('div > div > div:first-child').textContent.toLowerCase();
+    const titleA = getTitle(a);
+    const titleB = getTitle(b);
     return titleA.localeCompare(titleB);
   });
-
-  checkboxContainer.innerHTML = '';
 
   tasks.forEach(task => checkboxContainer.appendChild(task));
 }
@@ -182,42 +144,39 @@ function sortTasksByTime() {
   const tasks = Array.from(checkboxContainer.children);
 
   tasks.sort((a, b) => {
-      const timeElementA = a.querySelector('.flex.items-center:last-child').textContent.trim();
-      const timeElementB = b.querySelector('.flex.items-center:last-child').textContent.trim();
-      return compareTime(timeElementA, timeElementB);
+    const timeA = getTime(a);
+    const timeB = getTime(b);
+    return compareTime(timeA, timeB);
   });
-
-  checkboxContainer.innerHTML = '';
 
   tasks.forEach(task => checkboxContainer.appendChild(task));
 }
 
+function getTitle(task) {
+  return task.querySelector('div > div > div:first-child').textContent.trim().toLowerCase();
+}
+
+function getTime(task) {
+  return task.querySelector('.flex.items-center:last-child').textContent.trim();
+}
+
 function compareTime(timeA, timeB) {
-  // Split the time string into date and time components
-  const [dateA, timePartA] = timeA.split(' '); // Split by space to get date and time
-  const [dateB, timePartB] = timeB.split(' '); // Split by space to get date and time
+  const [dateA, timePartA] = timeA.split(' ');
+  const [dateB, timePartB] = timeB.split(' ');
 
-  // Split the time part into hours and minutes
-  const [hoursA, minutesA] = timePartA.split(':').map(Number); // Convert to numbers
-  const [hoursB, minutesB] = timePartB.split(':').map(Number); // Convert to numbers
+  const [hoursA, minutesA] = timePartA.split(':').map(Number);
+  const [hoursB, minutesB] = timePartB.split(':').map(Number);
 
-  // Compare the dates (not included in the initial function)
   if (dateA !== dateB) {
-    // If the dates are different, return the result of comparing the dates
     return dateA.localeCompare(dateB);
   }
 
-  // If dates are equal, compare the time
-  // Compare the hours first
   if (hoursA !== hoursB) {
     return hoursA - hoursB;
   }
 
-  // If hours are equal, compare minutes
   return minutesA - minutesB;
 }
-
-
 
 function TasksFromServer(formattedDate) {
   console.log(formattedDate);
@@ -233,29 +192,39 @@ function TasksFromServer(formattedDate) {
     .then(data => {
       const tasksFromServer = data.tasks;
       const checkboxContainer = document.getElementById('checkboxContainer');
-      const existingTasks = Array.from(checkboxContainer.children);
+      const existingTaskElements = Array.from(checkboxContainer.children);
 
       // Iterate through tasks received from server
       tasksFromServer.forEach(task => {
-        const existingTaskElement = existingTasks.find(element => element.dataset.taskId === task._id);
+        const existingTaskElement = existingTaskElements.find(element => element.dataset.taskId === task._id);
 
         if (!existingTaskElement) { // If task is not already displayed, create new task element
+          console.log('1');
           const taskElement = createTaskElement(task.taskName, task.taskDesc, task.creationDate, task._id);
           checkboxContainer.appendChild(taskElement);
-        } else if (task.finished) { // If task is finished, update its style
-          existingTaskElement.classList.add('bg-gray-700');
-          const finishButton = existingTaskElement.querySelector('.finish-button');
-          if (finishButton) {
-            finishButton.remove();
+          if (task.finished) {
+            taskElement.classList.add('bg-gray-700');
+            const finishButton = taskElement.querySelector('.finish-button');
+            if (finishButton) {
+              finishButton.remove();
+            }
+          }
+        } else { // If task already exists, update its style if finished
+          if (task.finished) {
+            existingTaskElement.classList.add('bg-gray-700');
+            const finishButton = existingTaskElement.querySelector('.finish-button');
+            if (finishButton) {
+              finishButton.remove();
+            }
           }
         }
       });
 
       // Remove tasks that are no longer present in the server response
-      existingTasks.forEach(existingTask => {
-        const taskId = existingTask.dataset.taskId;
+      existingTaskElements.forEach(existingTaskElement => {
+        const taskId = existingTaskElement.dataset.taskId;
         if (!tasksFromServer.some(task => task._id === taskId)) {
-          existingTask.remove();
+          existingTaskElement.remove();
         }
       });
     })
@@ -264,52 +233,50 @@ function TasksFromServer(formattedDate) {
     });
 }
 
-function saveTaskToServer(taskName, taskDesc, creationDate, taskTime) {
+async function makeRequest(url, method, data) {
+  const headers = {
+    'Content-Type': 'application/json',
+  };
 
-  fetch('/user/task/save', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ taskName, taskDesc, creationDate, taskTime }),
-  })
-    .then(response => response.json())
-    .then(savedTask => {
-      console.log('Task saved successfully:', savedTask);
-      TasksFromServer(formattedDate);
-    })
-    .catch(error => console.error('Error saving task:', error));
+  const response = await fetch(url, {
+    method,
+    headers,
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Error ${response.status}: ${response.statusText}`);
+  }
+
+  return response.json();
 }
 
-function deleteTaskOnServer(taskId) {
-  fetch('/user/task/delete', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ taskId }),
-  })
-    .then(response => response.json())
-    .then(deletedTask => {
-      console.log('Task deleted successfully:', deletedTask);
-      //TasksFromServer(formattedDate);
-    })
-    .catch(error => console.error('Error deleting task:', error));
+async function saveTaskToServer(taskName, taskDesc, creationDate, taskTime) {
+  try {
+    const savedTask = await makeRequest('/user/task/save', 'POST', { taskName, taskDesc, creationDate, taskTime });
+    console.log('Task saved successfully:', savedTask);
+    TasksFromServer(formattedDate);
+  } catch (error) {
+    console.error('Error saving task:', error);
+  }
 }
 
-function finishTaskOnServer(taskId) {
-  fetch('/user/task/finished', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ taskId }),
-  })
-    .then(response => response.json())
-    .then(updatedTask => {
-      console.log('Task marked as finished:', updatedTask);
-    })
-    .catch(error => console.error('Error marking task as finished:', error));
+async function deleteTaskOnServer(taskId) {
+  try {
+    const deletedTask = await makeRequest('/user/task/delete', 'POST', { taskId });
+    console.log('Task deleted successfully:', deletedTask);
+  } catch (error) {
+    console.error('Error deleting task:', error);
+  }
+}
+
+async function finishTaskOnServer(taskId) {
+  try {
+    const updatedTask = await makeRequest('/user/task/finished', 'POST', { taskId });
+    console.log('Task marked as finished:', updatedTask);
+  } catch (error) {
+    console.error('Error marking task as finished:', error);
+  }
 }
 
 function searchTasks() {
@@ -321,13 +288,14 @@ function filterTasks(searchQuery) {
   const tasks = document.getElementById('checkboxContainer').children;
 
   Array.from(tasks).forEach(task => {
-      const taskTitle = task.querySelector('div > div > div:first-child').textContent.toLowerCase();
-      const taskDescription = task.querySelector('div > div > div:nth-child(2)').textContent.toLowerCase();
+    const taskTitleElement = task.querySelector('div > div > div:first-child');
+    const taskDescriptionElement = task.querySelector('div > div > div:nth-child(2)');
 
-      if (taskTitle.includes(searchQuery) || taskDescription.includes(searchQuery)) {
-          task.style.display = '';
-      } else {
-          task.style.display = 'none';
-      }
+    // Cache the task title and description
+    const taskTitle = taskTitleElement.textContent.trim().toLowerCase();
+    const taskDescription = taskDescriptionElement.textContent.trim().toLowerCase();
+
+    // Use a ternary operator for concise styling changes
+    task.style.display = (taskTitle.includes(searchQuery) || taskDescription.includes(searchQuery)) ? '' : 'none';
   });
 }
