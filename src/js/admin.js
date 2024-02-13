@@ -65,7 +65,6 @@ const deleteUser = (userId) => {
   })
     .then(response => response.json())
     .then(result => {
-      console.log(result);
       const deletedRow = document.querySelector(`tr[data-user-id="${userId}"]`);
       if (deletedRow) {
         deletedRow.remove();
@@ -95,8 +94,6 @@ const editUser = (userId) => {
     })
       .then(response => response.json())
       .then(result => {
-        console.log(result);
-
         if (result.success) {
           fetchUsers();
         } else {
@@ -117,5 +114,4 @@ const editUser = (userId) => {
 
 const handleError = (error) => {
   console.error('An error occurred:', error);
-  // Display a user-friendly error message to the user
 }

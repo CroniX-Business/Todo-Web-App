@@ -14,8 +14,6 @@ const usernameHeader = document.getElementById('usernameHeader');
 function updateDisplayedUsername(newUsername) {
   if (usernameHeader) {
     usernameHeader.innerText = `${newUsername} settings`;
-  } else {
-    console.log('Username header not found');
   }
 }
 

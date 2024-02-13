@@ -66,7 +66,7 @@ function formatDate(date) {
 }
 
 
-function createTaskElement(taskTitle, taskDescription, creationDate, taskId) {
+function createTaskElement(taskTitle, taskDescription, Date, taskId) {
   const taskElement = document.createElement('div');
   taskElement.dataset.taskId = taskId;
   taskElement.className = 'p-2.5 bg-gray-200 rounded-lg flex items-center justify-between';
@@ -81,7 +81,7 @@ function createTaskElement(taskTitle, taskDescription, creationDate, taskId) {
 
   const rightSideHTML = `
     <div class="flex items-center">
-      <div style="opacity: 0.7;" class="mr-2">${creationDate}</div>
+      <div style="opacity: 0.7;" class="mr-2">${Date}</div>
       <button class="mr-2 finish-button"><i class="fa-solid fa-check text-green-500"></i></button>
       <button><i class="fa-solid fa-x text-red-500"></i></button>
     </div>
@@ -107,20 +107,16 @@ function createTaskElement(taskTitle, taskDescription, creationDate, taskId) {
 document.getElementById('taskForm').addEventListener('submit', function (event) {
   event.preventDefault();
 
-  // Cache DOM elements for reuse
   const taskTitleInput = document.getElementById('taskTitle');
   const taskDescriptionInput = document.getElementById('taskDescription');
   const taskTimeInput = document.getElementById('taskTime');
 
-  // Extract values from input fields
   const taskTitle = taskTitleInput.value;
   const taskDescription = taskDescriptionInput.value;
   const taskTime = taskTimeInput.value;
 
-  // Call function to save task to server
   saveTaskToServer(taskTitle, taskDescription, formattedDate, taskTime);
 
-  // Clear input fields after saving task
   taskTitleInput.value = '';
   taskDescriptionInput.value = '';
 });
@@ -179,8 +175,6 @@ function compareTime(timeA, timeB) {
 }
 
 function TasksFromServer(formattedDate) {
-  console.log(formattedDate);
-
   fetch('/user/tasks', {
     method: 'POST',
     headers: {
@@ -194,13 +188,11 @@ function TasksFromServer(formattedDate) {
       const checkboxContainer = document.getElementById('checkboxContainer');
       const existingTaskElements = Array.from(checkboxContainer.children);
 
-      // Iterate through tasks received from server
       tasksFromServer.forEach(task => {
         const existingTaskElement = existingTaskElements.find(element => element.dataset.taskId === task._id);
 
-        if (!existingTaskElement) { // If task is not already displayed, create new task element
-          console.log('1');
-          const taskElement = createTaskElement(task.taskName, task.taskDesc, task.creationDate, task._id);
+        if (!existingTaskElement) {
+          const taskElement = createTaskElement(task.taskName, task.taskDesc, task.Date, task._id);
           checkboxContainer.appendChild(taskElement);
           if (task.finished) {
             taskElement.classList.add('bg-gray-700');
@@ -209,7 +201,7 @@ function TasksFromServer(formattedDate) {
               finishButton.remove();
             }
           }
-        } else { // If task already exists, update its style if finished
+        } else {
           if (task.finished) {
             existingTaskElement.classList.add('bg-gray-700');
             const finishButton = existingTaskElement.querySelector('.finish-button');
@@ -220,7 +212,6 @@ function TasksFromServer(formattedDate) {
         }
       });
 
-      // Remove tasks that are no longer present in the server response
       existingTaskElements.forEach(existingTaskElement => {
         const taskId = existingTaskElement.dataset.taskId;
         if (!tasksFromServer.some(task => task._id === taskId)) {
@@ -251,10 +242,9 @@ async function makeRequest(url, method, data) {
   return response.json();
 }
 
-async function saveTaskToServer(taskName, taskDesc, creationDate, taskTime) {
+async function saveTaskToServer(taskName, taskDesc, Date, taskTime) {
   try {
-    const savedTask = await makeRequest('/user/task/save', 'POST', { taskName, taskDesc, creationDate, taskTime });
-    console.log('Task saved successfully:', savedTask);
+    const savedTask = await makeRequest('/user/task/save', 'POST', { taskName, taskDesc, Date, taskTime });
     TasksFromServer(formattedDate);
   } catch (error) {
     console.error('Error saving task:', error);
@@ -264,7 +254,6 @@ async function saveTaskToServer(taskName, taskDesc, creationDate, taskTime) {
 async function deleteTaskOnServer(taskId) {
   try {
     const deletedTask = await makeRequest('/user/task/delete', 'POST', { taskId });
-    console.log('Task deleted successfully:', deletedTask);
   } catch (error) {
     console.error('Error deleting task:', error);
   }
@@ -273,7 +262,6 @@ async function deleteTaskOnServer(taskId) {
 async function finishTaskOnServer(taskId) {
   try {
     const updatedTask = await makeRequest('/user/task/finished', 'POST', { taskId });
-    console.log('Task marked as finished:', updatedTask);
   } catch (error) {
     console.error('Error marking task as finished:', error);
   }
@@ -291,11 +279,9 @@ function filterTasks(searchQuery) {
     const taskTitleElement = task.querySelector('div > div > div:first-child');
     const taskDescriptionElement = task.querySelector('div > div > div:nth-child(2)');
 
-    // Cache the task title and description
     const taskTitle = taskTitleElement.textContent.trim().toLowerCase();
     const taskDescription = taskDescriptionElement.textContent.trim().toLowerCase();
 
-    // Use a ternary operator for concise styling changes
     task.style.display = (taskTitle.includes(searchQuery) || taskDescription.includes(searchQuery)) ? '' : 'none';
   });
 }

@@ -1,6 +1,7 @@
 import express from 'express';
 import UserModel from './database/user.js';
 import TaskModel from './database/tasks.js';
+import LogModel from './database/logs.js';
 
 const userRouter = express.Router();
 
@@ -22,9 +23,9 @@ async function getTasksByDate(userEmail, specificDate, res) {
             .populate({
                 path: 'tasks',
                 match: {
-                    creationDate: {
-                        $regex: "^" + specificDate, // Use regex to match the date part
-                        $options: "i" // Case insensitive
+                    Date: {
+                        $regex: "^" + specificDate,
+                        $options: "i"
                     }
                 },
                 populate: { path: 'logs' },
@@ -44,12 +45,12 @@ async function getTasksByDate(userEmail, specificDate, res) {
 }
 
 userRouter.post('/task/save', async (req, res) => {
-    const { taskName, taskDesc, creationDate, taskTime } = req.body;
+    const { taskName, taskDesc, Date, taskTime } = req.body;
     const userEmail = req.user.email;
 
-    const DateTime = creationDate + " " + taskTime;
+    const DateTime = Date + " " + taskTime;
 
-    if (!taskName || !creationDate) {
+    if (!taskName || !Date) {
         res.status(400).json({ success: false, message: 'Task name or creation date not provided' });
         return;
     }
@@ -62,7 +63,7 @@ userRouter.post('/task/save', async (req, res) => {
             return;
         }
 
-        const taskCount = await TaskModel.countDocuments({ user: user._id, creationDate });
+        const taskCount = await TaskModel.countDocuments({ user: user._id, Date });
 
         if (taskCount >= user.taskCount) {
             res.status(400).json({ success: false, message: 'You cannot create more tasks for this date' });
@@ -72,7 +73,7 @@ userRouter.post('/task/save', async (req, res) => {
         const newTask = new TaskModel({
             taskName,
             taskDesc,
-            creationDate: DateTime,
+            Date: DateTime,
             user: user._id,
         });
 
@@ -163,22 +164,19 @@ userRouter.post('/settings', async (req, res) => {
     const { setting, param } = req.body;
 
     const userEmail = req.user.email;
-    console.log(userEmail);
-
-    let result;
 
     switch (setting) {
         case 'changeName':
-            result = await changeName(userEmail, param, res);
+            changeName(userEmail, param, res);
             break;
         case 'changeEmail':
-            result = await changeEmail(userEmail, param, res);
+            changeEmail(userEmail, param, res);
             break;
         case 'changePassword':
-            result = await changePassword(userEmail, param, res);
+            changePassword(userEmail, param, res);
             break;
         case 'deactivateAccount':
-            result = await deleteAccount(userEmail, param, res);
+            deleteAccount(userEmail, param, res);
             break;
         default:
             return res.status(400).json({ error: 'Invalid setting' });
@@ -187,9 +185,11 @@ userRouter.post('/settings', async (req, res) => {
 
 async function changeName(userEmail, param, res) {
     try {
-        if (param.trim() === '') {
-            res.json({ success: false, message: 'Empty field' });
+        if (!param.trim()) {
+            return res.status(400).json({ success: false, message: 'Empty field' });
         }
+
+        const user = await UserModel.findOne({ email: userEmail });
 
         const updatedUser = await UserModel.findOneAndUpdate(
             { email: userEmail },
@@ -198,23 +198,35 @@ async function changeName(userEmail, param, res) {
         );
 
         if (!updatedUser) {
-            res.json({ success: false, message: 'Error while updating user' });
+            return res.status(404).json({ success: false, message: 'User not found' });
         }
+
+
+        const logEntry = new LogModel({
+            action: `Changed name to ${param}`,
+            user: updatedUser._id
+        });
+        await logEntry.save();
+
+        user.logs.push(logEntry._id);
+        await user.save();
 
         res.cookie('username', param, { maxAge: 60 * 60 * 1000 });
         res.json({ success: true });
 
     } catch (error) {
         console.error('Error:', error);
-        return 'error';
+        res.status(500).json({ success: false, message: 'Internal Server Error' });
     }
 }
 
 async function changePassword(userEmail, param, res) {
     try {
-        if (param.trim() === '') {
-            res.json({ success: false, message: 'Empty field' });
+        if (!param.trim()) {
+            return res.status(400).json({ success: false, message: 'Empty field' });
         }
+
+        const user = await UserModel.findOne({ email: userEmail });
 
         const updatedUser = await UserModel.findOneAndUpdate(
             { email: userEmail },
@@ -223,22 +235,33 @@ async function changePassword(userEmail, param, res) {
         );
 
         if (!updatedUser) {
-            res.json({ success: false, message: 'Error while updating user' });
+            return res.status(404).json({ success: false, message: 'User not found' });
         }
+
+        const logEntry = new LogModel({
+            action: `Changed password`,
+            user: updatedUser._id
+        });
+        await logEntry.save();
+
+        user.logs.push(logEntry._id);
+        await user.save();
 
         res.json({ success: true });
 
     } catch (error) {
         console.error('Error:', error);
-        return 'error';
+        res.status(500).json({ success: false, message: 'Internal Server Error' });
     }
 }
 
 async function changeEmail(userEmail, param, res) {
     try {
-        if (param.trim() === '') {
-            res.json({ success: false, message: 'Empty field' });
+        if (!param.trim()) {
+            return res.status(400).json({ success: false, message: 'Empty field' });
         }
+
+        const user = await UserModel.findOne({ email: userEmail });
 
         const updatedUser = await UserModel.findOneAndUpdate(
             { email: userEmail },
@@ -247,14 +270,23 @@ async function changeEmail(userEmail, param, res) {
         );
 
         if (!updatedUser) {
-            res.json({ success: false, message: 'Error while updating user' });
+            return res.status(404).json({ success: false, message: 'User not found' });
         }
+
+        const logEntry = new LogModel({
+            action: `Changed email to ${param}`,
+            user: updatedUser._id
+        });
+        await logEntry.save();
+
+        user.logs.push(logEntry._id);
+        await user.save();
 
         res.json({ success: true, redirect: '/' });
 
     } catch (error) {
         console.error('Error:', error);
-        return 'error';
+        res.status(500).json({ success: false, message: 'Internal Server Error' });
     }
 }
 
@@ -263,14 +295,18 @@ async function deleteAccount(userEmail, param, res) {
         const deletedUser = await UserModel.findOneAndDelete({ email: userEmail });
 
         if (!deletedUser) {
-            res.json({ success: false, message: 'Error while deleting user' });
+            return res.status(404).json({ success: false, message: 'User not found' });
         }
+
+        await TaskModel.deleteMany({ user: deletedUser._id });
+        await LogModel.deleteMany({ user: deletedUser._id });
 
         res.json({ success: true, redirect: '/signUp' });
     } catch (error) {
         console.error('Error:', error);
-        return 'error';
+        res.status(500).json({ success: false, message: 'Internal Server Error' });
     }
 }
+
 
 export default userRouter;
