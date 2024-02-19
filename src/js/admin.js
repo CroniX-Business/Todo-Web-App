@@ -84,13 +84,14 @@ const editUser = (userId) => {
 
     const userEmail = editUserForm.elements.editUserEmail.value;
     const userRole = editUserForm.elements.editUserRole.value;
+    const userTaskLimit = editUserForm.elements.editUserTaskLimit.value;
 
     fetch(`/admin/users/${userId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ userEmail, userRole })
+      body: JSON.stringify({ userEmail, userRole, userTaskLimit })
     })
       .then(response => response.json())
       .then(result => {

@@ -57,7 +57,7 @@ adminRouter.delete('/users/:userId', async (req, res) => {
 
 adminRouter.put('/users/:userId', async (req, res) => {
   const userId = req.params.userId;
-  const { userEmail, userRole } = req.body;
+  const { userEmail, userRole, userTaskLimit } = req.body;
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -81,6 +81,9 @@ adminRouter.put('/users/:userId', async (req, res) => {
     }
     if (userRole) {
       updateFields.role = userRole;
+    }
+    if (userTaskLimit) {
+      updateFields.taskCount = userTaskLimit;
     }
 
     const updatedUser = await UserModel.findByIdAndUpdate(

@@ -72,10 +72,9 @@
         </div>
     </div>
 
-    <div id="editModal" class="fixed inset-0 z-50 items-center justify-center hidden">
+    <div id="editModal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
         <div class="absolute inset-0 bg-gray-500 opacity-0"></div>
-        <div class="bg-white p-8 rounded-lg z-10 relative">
-
+        <div class="bg-white p-8 rounded-lg z-10 relative w-full max-w-md">
             <button id="closeEditModal" class="absolute top-0 right-0 mt-2 mr-2 text-gray-700 cursor-pointer">
                 <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
@@ -83,7 +82,7 @@
                     </path>
                 </svg>
             </button>
-
+    
             <h2 class="userName text-2xl font-semibold mb-4">Edit user</h2>
             <form id="editUserForm">
                 <div class="mb-4">
@@ -97,10 +96,15 @@
                         <option value="admin">admin</option>
                     </select>
                 </div>
+                <div class="mb-4">
+                    <label for="editUserTaskLimit" class="block text-sm font-medium text-gray-700">Task Limit</label>
+                    <input type="number" id="editUserTaskLimit" name="editUserTaskLimit" class="mt-1 p-2 border rounded w-full" max="20" min="0">
+                </div>
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save Changes</button>
             </form>
         </div>
     </div>
+    
 </body>
 
 </html>
