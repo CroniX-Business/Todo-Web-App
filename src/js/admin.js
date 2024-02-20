@@ -34,6 +34,11 @@ const createUserRow = (user) => {
   roleCell.className = 'px-6 py-4';
   row.appendChild(roleCell);
 
+  const taskLimitCell = document.createElement('td');
+  taskLimitCell.textContent = user.taskCount;
+  taskLimitCell.className = 'px-6 py-4';
+  row.appendChild(taskLimitCell);
+
   const actionsCell = document.createElement('td');
   actionsCell.className = 'px-6 py-4';
   const editButton = createActionButton('Edit', () => editUser(user._id));

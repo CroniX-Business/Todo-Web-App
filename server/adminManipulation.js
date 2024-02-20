@@ -7,7 +7,7 @@ const adminRouter = express.Router();
 
 async function getUsers() {
   try {
-    const users = await UserModel.find({}, 'email role');
+    const users = await UserModel.find({}, 'email role taskCount');
     return users;
   } catch (error) {
     console.error('Error fetching users:', error);
