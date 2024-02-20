@@ -24,7 +24,21 @@ function updateDate() {
     currentDateElement.classList.toggle('text-green-500', isCurrentDay());
   }
 
+  const addTaskButton = document.getElementById('addTaskButton');
+  if (isDateInPast(currentDate)) {
+    addTaskButton.disabled = true;
+  } else {
+    addTaskButton.disabled = false;
+  }
+
   TasksFromServer(formattedDate);
+}
+
+function isDateInPast(date) {
+  date.setHours(0, 0, 0, 0);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return date < today;
 }
 
 function prevDay() {
