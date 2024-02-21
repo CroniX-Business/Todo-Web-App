@@ -32,6 +32,7 @@
     "has": "^1.0.4",
     "inflight": "^1.0.6",
     "inherits": "^2.0.4",
+    "inquirer": "^9.2.15",
     "is-binary-path": "^2.1.0",
     "is-core-module": "^2.13.0",
     "is-extglob": "^2.1.1",
@@ -94,7 +95,8 @@
   "type": "module",
   "scripts": {
     "start": "nodemon server/server.js",
-    "build:css": "npx tailwindcss -i ./src/css/style.css -o ./dist/tailwind.css --watch"
+    "build:css": "npx tailwindcss -i ./src/css/style.css -o ./dist/tailwind.css --watch",
+    "createAdmin": "node server/database/createAdmin.js"
   },
   "author": "Petar Ruškan",
   "license": "ISC"
