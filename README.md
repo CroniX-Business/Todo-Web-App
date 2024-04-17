@@ -2,7 +2,7 @@
 
 This is a simple Todo web application built using Node.js, Express.js, MongoDB Atlas, and Tailwind CSS for the frontend. Users can add tasks they need to complete and schedule them for the next 10 days. An admin user has CRUD (Create, Read, Update, Delete) functionalities and can be created via the terminal using npm run createAdmin.
 
-##Features
+## Features
 
 - Users can add tasks to their todo list.
 - Tasks can be scheduled for the next 10 days and can be only-read for past 10 days.
@@ -10,7 +10,7 @@ This is a simple Todo web application built using Node.js, Express.js, MongoDB A
   - Create, Read, Update, and Delete tasks.
   - Set task limits per day for individual users.
 
-##Prerequisites
+## Prerequisites
 
 Before running the application, ensure you have the following installed:
 
@@ -18,7 +18,7 @@ Before running the application, ensure you have the following installed:
 - MongoDB Atlas account
 - npm (Node Package Manager)
   
-##Installation
+## Installation
 
 1. Clone the repository:
 ```
